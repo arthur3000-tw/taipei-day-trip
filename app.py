@@ -38,7 +38,7 @@ class Attraction(BaseModel):
 
 # 建立 attractions 資料 model
 class Attractions(BaseModel):
-    nextPage: int
+    nextPage: int | None
     data: list[Attraction]
 
 
@@ -80,8 +80,10 @@ def queryDB(sql, val=None):
 
 # 以 keyword 查詢
 # 輸入
-# page: int
-# keyword: str
+# page: int       頁數
+# keyword: str    關鍵字
+# 輸出
+# Attractions     資料
 def attractions(page, keyword=None):
     # 每頁數據量
     pageCounts = 12
@@ -116,6 +118,7 @@ def attractions(page, keyword=None):
                 result[i+page*pageCounts]["images"] = images["images"]
                 data.append(Attraction.model_validate(
                     result[i+page*pageCounts]))
+            return Attractions(nextPage=None, data=data)
         # 輸入頁數等於 0 小於最大頁數
         else:
             for i in range(12):
@@ -123,14 +126,14 @@ def attractions(page, keyword=None):
                 result[i+page*pageCounts]["images"] = images["images"]
                 data.append(Attraction.model_validate(
                     result[i+page*pageCounts]))
-        return Attractions(nextPage=page, data=data)
+            return Attractions(nextPage=page+1, data=data)
 
 
 # 以 attraction id 查詢
 # 輸入
-# id: int               輸入 id
+# id: int        id
 # 輸出
-# result: Attraction    輸出資料
+# Attraction     資料
 def attraction_id(id):
     sql = "SELECT attraction.*, mrt.name AS mrt, category.name AS category FROM attraction \
            LEFT JOIN attraction_mrt ON attraction.id = attraction_mrt.attraction_id \
@@ -144,14 +147,14 @@ def attraction_id(id):
     if len(result) == 1:
         images = json.loads(result[0]["images"])
         result[0]["images"] = images["images"]
-        return result[0]
+        return AttractionID(data=Attraction.model_validate(result[0]))
     else:
         raise ValueError()
 
 
 # 捷運站按照景點數量排序
 # 輸出
-# result: list    輸出資料
+# DataList       資料
 def mrts():
     sql = "SELECT mrt.name, count(attraction_mrt.mrt_id) as times \
            FROM attraction_mrt INNER JOIN mrt ON mrt.id = attraction_mrt.mrt_id \
@@ -160,12 +163,12 @@ def mrts():
     result = []
     for eachDict in results:
         result.append(eachDict["name"])
-    return result
+    return DataList(data=result)
 
 
 # 取得 attractions 資料列表
 @app.get(path="/api/attractions")
-async def api_attractions(request: Request, page: int, keyword: str = None) -> Attractions:
+async def api_attractions(request: Request, page: int = 0, keyword: str = None) -> Attractions:
     try:
         result = attractions(page, keyword)
         return result
@@ -178,7 +181,7 @@ async def api_attractions(request: Request, page: int, keyword: str = None) -> A
 async def api_attraction_id(request: Request, attractionId: int) -> AttractionID:
     try:
         result = attraction_id(attractionId)
-        return AttractionID(data=Attraction.model_validate(result))
+        return result
     except ValueError:
         return JSONResponse(status_code=400, content=Error(error=True, message="未找到此 ID 之景點資料").model_dump())
 
@@ -187,7 +190,7 @@ async def api_attraction_id(request: Request, attractionId: int) -> AttractionID
 @app.get(path="/api/mrts")
 async def api_mrts(request: Request) -> DataList:
     result = mrts()
-    return DataList(data=result)
+    return result
 
 
 # Error handling
