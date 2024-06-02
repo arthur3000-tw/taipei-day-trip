@@ -88,45 +88,89 @@ def attractions(page, keyword=None):
     # 每頁數據量
     pageCounts = 12
     # 未設條件下的查詢語句
-    sql = "SELECT attraction.*, mrt.name AS mrt, category.name AS category FROM attraction \
-       LEFT JOIN attraction_mrt ON attraction.id = attraction_mrt.attraction_id \
-       LEFT JOIN mrt ON mrt.id = attraction_mrt.mrt_id \
-       LEFT JOIN attraction_category ON attraction.id = attraction_category.attraction_id \
-       LEFT JOIN category ON category.id = attraction_category.category_id "
+    sql = "SELECT attraction.*, GROUP_CONCAT(DISTINCT mrt.name) AS mrt, GROUP_CONCAT(DISTINCT category.name) AS category \
+           FROM attraction \
+           LEFT JOIN attraction_mrt ON attraction.id = attraction_mrt.attraction_id \
+           LEFT JOIN mrt ON mrt.id = attraction_mrt.mrt_id \
+           LEFT JOIN attraction_category ON attraction.id = attraction_category.attraction_id \
+           LEFT JOIN category ON category.id = attraction_category.category_id "
+    # 未設條件狀況下
     if keyword == None:
-        result = queryDB(sql,)
+        # 取得所有數量
+        getCount = "SELECT COUNT(attraction.id) as dataCounts FROM attraction"
+        result = queryDB(getCount)
+        # 若查無結果
+        if len(result) == 0:
+            raise ValueError()
+        # 取出總數量
+        dataCounts = result[0]["dataCounts"]
+        # 計算 offset
+        offset = pageCounts * page
+        # offset 數量條件執行
+        if offset > dataCounts:
+            raise ValueError()
+        else:
+            # 計算最大頁數
+            maxPage = dataCounts//pageCounts
+            # page 大於最大頁數
+            if page > maxPage:
+                raise ValueError()
+        # 向資料庫取得資料
+        sql += "GROUP BY attraction.id LIMIT %s OFFSET %s"
+        val = (pageCounts, offset)
+        result = queryDB(sql, val)
+        # 輸出資料
+        data = []
+        # page 不是最大頁數時
+        if page != maxPage:
+            for i in range(pageCounts):
+                images = json.loads(result[i]["images"])
+                result[i]["images"] = images["images"]
+                data.append(Attraction.model_validate(
+                    result[i]))
+            return Attractions(nextPage=page+1, data=data)
+        # page 是最大頁數時
+        else:
+            for i in range(dataCounts % pageCounts):
+                images = json.loads(result[i]["images"])
+                result[i]["images"] = images["images"]
+                data.append(Attraction.model_validate(
+                    result[i]))
+            return Attractions(nextPage=None, data=data)
     # 加入條件下的查詢
     else:
-        sql += "WHERE mrt.name = %s OR attraction.name LIKE %s"
-        val = (keyword, "%"+keyword+"%")
+        # 計算 offset
+        offset = pageCounts * page
+        # 向資料庫取得資料
+        sql += "WHERE mrt.name = %s OR attraction.name LIKE %s \
+                GROUP BY attraction.id LIMIT %s OFFSET %s"
+        val = (keyword, "%"+keyword+"%", pageCounts, offset)
         result = queryDB(sql, val)
-    # 確認資料數量
-    dataCounts = len(result)
-    if dataCounts == 0:
-        raise ValueError()
-    # 計算最大頁數
-    maxPage = dataCounts//pageCounts
-    # 輸入頁數大於最大頁數或小於0
-    if page > maxPage or page < 0:
-        raise ValueError()
-    else:
+        # 結果數量
+        dataCounts = len(result)
+        # 若查無結果
+        if dataCounts == 0:
+            raise ValueError()
+        # 計算最大頁數
+        maxPage = dataCounts//pageCounts
+        # 輸出資料
         data = []
-        # 輸入頁數等於最大頁數
-        if page == maxPage:
-            for i in range(dataCounts % pageCounts):
-                images = json.loads(result[i+page*pageCounts]["images"])
-                result[i+page*pageCounts]["images"] = images["images"]
+        # page 不是最大頁數時
+        if page != maxPage:
+            for i in range(pageCounts):
+                images = json.loads(result[i]["images"])
+                result[i]["images"] = images["images"]
                 data.append(Attraction.model_validate(
-                    result[i+page*pageCounts]))
-            return Attractions(nextPage=None, data=data)
-        # 輸入頁數等於 0 小於最大頁數
-        else:
-            for i in range(12):
-                images = json.loads(result[i+page*pageCounts]["images"])
-                result[i+page*pageCounts]["images"] = images["images"]
-                data.append(Attraction.model_validate(
-                    result[i+page*pageCounts]))
+                    result[i]))
             return Attractions(nextPage=page+1, data=data)
+        # page 是最大頁數時
+        else:
+            for i in range(dataCounts % pageCounts):
+                images = json.loads(result[i]["images"])
+                result[i]["images"] = images["images"]
+                data.append(Attraction.model_validate(
+                    result[i]))
+            return Attractions(nextPage=None, data=data)
 
 
 # 以 attraction id 查詢
@@ -135,12 +179,13 @@ def attractions(page, keyword=None):
 # 輸出
 # Attraction     資料
 def attraction_id(id):
-    sql = "SELECT attraction.*, mrt.name AS mrt, category.name AS category FROM attraction \
+    sql = "SELECT attraction.*, GROUP_CONCAT(DISTINCT mrt.name) AS mrt, GROUP_CONCAT(DISTINCT category.name) AS category \
+           FROM attraction \
            LEFT JOIN attraction_mrt ON attraction.id = attraction_mrt.attraction_id \
            LEFT JOIN mrt ON mrt.id = attraction_mrt.mrt_id \
            LEFT JOIN attraction_category ON attraction.id = attraction_category.attraction_id \
            LEFT JOIN category ON category.id = attraction_category.category_id \
-           WHERE attraction.id = %s"
+           WHERE attraction.id = %s GROUP BY attraction.name"
     val = (id,)
     # 資料庫查詢
     result = queryDB(sql, val)
@@ -168,7 +213,7 @@ def mrts():
 
 # 取得 attractions 資料列表
 @app.get(path="/api/attractions")
-async def api_attractions(request: Request, page: int = 0, keyword: str = None) -> Attractions:
+async def api_attractions(request: Request, page: int = Query(default=0, ge=0), keyword: str = None) -> Attractions:
     try:
         result = attractions(page, keyword)
         return result
