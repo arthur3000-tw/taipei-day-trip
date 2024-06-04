@@ -1,5 +1,5 @@
 console.log("hi");
-fetch("http://0.0.0.0:8000/api/mrts")
+fetch("http://13.213.240.133:8000/api/mrts")
   .then((response) => {
     return response.json();
   })
