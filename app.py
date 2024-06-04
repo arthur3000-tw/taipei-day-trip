@@ -4,11 +4,25 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.exceptions import RequestValidationError
 from pydantic import BaseModel
 from mysql.connector import pooling
+from fastapi.middleware.cors import CORSMiddleware
 import json
 
 
 app = FastAPI()
-app.mount('/static', StaticFiles(directory='static',html=True))
+app.mount('/static', StaticFiles(directory='static', html=True))
+
+
+origins = [
+    "http://localhost:8000",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # 資料庫訊息
 myDB = {
