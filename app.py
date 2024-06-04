@@ -1,5 +1,6 @@
 from fastapi import *
 from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.exceptions import RequestValidationError
 from pydantic import BaseModel
 from mysql.connector import pooling
@@ -7,7 +8,7 @@ import json
 
 
 app = FastAPI()
-
+app.mount('/static', StaticFiles(directory='static',html=True))
 
 # 資料庫訊息
 myDB = {
