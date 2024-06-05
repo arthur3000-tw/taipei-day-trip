@@ -43,7 +43,6 @@ body header div.top nav div ul li {
   padding: 10px;
 }
 body section.top {
-  border: solid orange 3px;
   position: relative;
   height: 320px;
 }
@@ -135,20 +134,17 @@ body section.top div.top-main div.top-main-content div.search div.search-bar div
   cursor: pointer;
 }
 body main {
-  border: solid blue 3px;
   background-color: white;
   display: flex;
   justify-content: center;
   flex-grow: 1;
 }
 body main section.main {
-  border: solid green 3px;
   width: 1200px;
   height: 100%;
   padding: 40px 0px 40px 0px;
 }
 body main section.main div.list-bar {
-  border: solid red 3px;
   width: 100%;
   height: 70px;
   display: flex;
@@ -169,7 +165,6 @@ body main section.main div.list-bar div.left img:hover {
   opacity: 100%;
 }
 body main section.main div.list-bar div.mrt-list {
-  border: solid orange 3px;
   width: 1106px;
   height: 50px;
   white-space: nowrap;
@@ -179,7 +174,6 @@ body main section.main div.list-bar div.mrt-list {
   align-items: center;
 }
 body main section.main div.list-bar div.mrt-list div.mrt-text-container {
-  border: solid blue 3px;
   display: flex;
   transition: all 0.3s ease;
 }
@@ -206,12 +200,10 @@ body main section.main div.list-bar div.right img:hover {
   opacity: 100%;
 }
 body main section.main div.attractions {
-  border: solid purple 3px;
   width: 100%;
   padding: 15px;
 }
 body main section.main div.attractions div.attractions-group {
-  border: solid yellow 3px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -229,7 +221,6 @@ body main section.main div.attractions div.attractions-group div.attraction {
   width: 23.04%;
 }
 body main section.main div.attractions div.attractions-group div.attraction div.attraction-img {
-  border: solid blue 1px;
   width: 100%;
   height: 197px;
   background-position: center;
@@ -237,7 +228,6 @@ body main section.main div.attractions div.attractions-group div.attraction div.
   background-size: cover;
 }
 body main section.main div.attractions div.attractions-group div.attraction div.attraction-name {
-  border: solid green 1px;
   width: 100%;
   height: 40px;
   position: absolute;
@@ -249,7 +239,6 @@ body main section.main div.attractions div.attractions-group div.attraction div.
   padding: 10px;
 }
 body main section.main div.attractions div.attractions-group div.attraction div.attraction-name div.attraction-name-text {
-  border: solid red 1px;
   width: 100%;
   color: white;
   font-weight: bold;
@@ -258,25 +247,21 @@ body main section.main div.attractions div.attractions-group div.attraction div.
   white-space: nowrap;
 }
 body main section.main div.attractions div.attractions-group div.attraction div.attraction-info {
-  border: solid orange 1px;
   width: 100%;
   height: 45px;
   padding: 10px;
   display: flex;
 }
 body main section.main div.attractions div.attractions-group div.attraction div.attraction-info div.attraction-info-mrt {
-  border: solid green 1px;
   height: 100%;
   flex: 1;
   display: flex;
   align-items: center;
 }
 body main section.main div.attractions div.attractions-group div.attraction div.attraction-info div.attraction-info-mrt div.attraction-info-mrt-name {
-  border: solid orange 1px;
   color: #757575;
 }
 body main section.main div.attractions div.attractions-group div.attraction div.attraction-info div.attraction-info-category {
-  border: solid yellowgreen 1px;
   height: 100%;
   flex: 1;
   display: flex;
@@ -285,7 +270,6 @@ body main section.main div.attractions div.attractions-group div.attraction div.
 }
 body main section.main div.attractions div.attractions-group div.attraction div.attraction-info div.attraction-info-category div.attraction-info-category-name {
   position: absolute;
-  border: solid orange 1px;
   color: #757575;
   right: 0px;
 }

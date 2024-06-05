@@ -46,7 +46,7 @@ body {
     }
   }
   section.top {
-    border: solid orange 3px;
+    // border: solid orange 3px;
     position: relative;
     height: 320px;
     div.hero-image {
@@ -142,19 +142,19 @@ body {
     }
   }
   main {
-    border: solid blue 3px;
+    // border: solid blue 3px;
     // height: 966px;
     background-color: white;
     display: flex;
     justify-content: center;
     flex-grow: 1;
     section.main {
-      border: solid green 3px;
+    //   border: solid green 3px;
       width: 1200px;
       height: 100%;
       padding: 40px 0px 40px 0px;
       div.list-bar {
-        border: solid red 3px;
+        // border: solid red 3px;
         width: 100%;
         height: 70px;
         display: flex;
@@ -175,7 +175,7 @@ body {
           }
         }
         div.mrt-list {
-          border: solid orange 3px;
+        //   border: solid orange 3px;
           width: 1106px;
           height: 50px;
           white-space: nowrap;
@@ -185,7 +185,7 @@ body {
           align-items: center;
           //   padding: 13px 10px 13px 10px;
           div.mrt-text-container {
-            border: solid blue 3px;
+            // border: solid blue 3px;
             display: flex;
             transition: all 0.3s ease;
             div.mrt-text {
@@ -216,12 +216,12 @@ body {
         }
       }
       div.attractions {
-        border: solid purple 3px;
+        // border: solid purple 3px;
         width: 100%;
         // height: 816px;
         padding: 15px;
         div.attractions-group {
-          border: solid yellow 3px;
+        //   border: solid yellow 3px;
           width: 100%;
           height: 100%;
           display: flex;
@@ -237,7 +237,7 @@ body {
             height: 242px;
             width: 23.04%;
             div.attraction-img {
-              border: solid blue 1px;
+            //   border: solid blue 1px;
               width: 100%;
               height: 197px;
               background-position: center;
@@ -245,7 +245,7 @@ body {
               background-size: cover;
             }
             div.attraction-name {
-              border: solid green 1px;
+            //   border: solid green 1px;
               width: 100%;
               height: 40px;
               position: absolute;
@@ -256,7 +256,7 @@ body {
               align-items: center;
               padding: 10px;
               div.attraction-name-text {
-                border: solid red 1px;
+                // border: solid red 1px;
                 width: 100%;
                 color: white;
                 font-weight: bold;
@@ -266,24 +266,24 @@ body {
               }
             }
             div.attraction-info {
-              border: solid orange 1px;
+            //   border: solid orange 1px;
               width: 100%;
               height: 45px;
               padding: 10px;
               display: flex;
               div.attraction-info-mrt {
-                border: solid green 1px;
+                // border: solid green 1px;
                 height: 100%;
                 flex: 1;
                 display: flex;
                 align-items: center;
                 div.attraction-info-mrt-name {
-                  border: solid orange 1px;
+                //   border: solid orange 1px;
                   color: #757575;
                 }
               }
               div.attraction-info-category {
-                border: solid yellowgreen 1px;
+                // border: solid yellowgreen 1px;
                 height: 100%;
                 flex: 1;
                 display: flex;
@@ -291,7 +291,7 @@ body {
                 position: relative;
                 div.attraction-info-category-name {
                   position: absolute;
-                  border: solid orange 1px;
+                //   border: solid orange 1px;
                   color: #757575;
                   right: 0px;
                 }
