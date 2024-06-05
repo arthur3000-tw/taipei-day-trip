@@ -6,6 +6,9 @@
 
 body {
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
   header {
     display: flex;
     justify-content: center;
@@ -15,6 +18,7 @@ body {
     background-color: white;
     padding-top: 5px;
     padding-bottom: 5px;
+    box-shadow: 0 10px 6px -6px #777;
     div.top {
       width: 1200px;
       nav {
@@ -139,10 +143,11 @@ body {
   }
   main {
     border: solid blue 3px;
-    height: 966px;
+    // height: 966px;
     background-color: white;
     display: flex;
     justify-content: center;
+    flex-grow: 1;
     section.main {
       border: solid green 3px;
       width: 1200px;
@@ -157,10 +162,12 @@ body {
         div.left {
           // border: solid red 3px;
           height: 50px;
+          padding: 9px 0px 9px 15px;
           img {
             opacity: 50%;
             width: 32px;
             height: 32px;
+            cursor: pointer;
             transition: all 0.3s ease;
             &:hover {
               opacity: 100%;
@@ -168,17 +175,39 @@ body {
           }
         }
         div.mrt-list {
-          // border: solid red 3px;
+          border: solid orange 3px;
           width: 1106px;
           height: 50px;
+          white-space: nowrap;
+          overflow-x: hidden;
+          overflow-y: hidden;
+          display: flex;
+          align-items: center;
+          //   padding: 13px 10px 13px 10px;
+          div.mrt-text-container {
+            border: solid blue 3px;
+            display: flex;
+            transition: all 0.3s ease;
+            div.mrt-text {
+              // border: solid blue 3px;
+              color: black;
+              padding: 5px 15px 5px 15px;
+              &:hover {
+                color: red;
+                cursor: pointer;
+              }
+            }
+          }
         }
         div.right {
           // border: solid red 3px;
           height: 50px;
+          padding: 9px 15px 9px 0px;
           img {
             opacity: 50%;
             width: 32px;
             height: 32px;
+            cursor: pointer;
             transition: all 0.3s ease;
             &:hover {
               opacity: 100%;
@@ -186,10 +215,95 @@ body {
           }
         }
       }
+      div.attractions {
+        border: solid purple 3px;
+        width: 100%;
+        // height: 816px;
+        padding: 15px;
+        div.attractions-group {
+          border: solid yellow 3px;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: flex-start;
+          align-items: center;
+          gap: 30px;
+          div.attraction {
+            position: relative;
+            border: solid #e8e8e8 1px;
+            border-radius: 5px;
+            overflow: hidden;
+            height: 242px;
+            width: 23.04%;
+            div.attraction-img {
+              border: solid blue 1px;
+              width: 100%;
+              height: 197px;
+              background-position: center;
+              background-repeat: no-repeat;
+              background-size: cover;
+            }
+            div.attraction-name {
+              border: solid green 1px;
+              width: 100%;
+              height: 40px;
+              position: absolute;
+              top: 157px;
+              background-color: black;
+              opacity: 60%;
+              display: flex;
+              align-items: center;
+              padding: 10px;
+              div.attraction-name-text {
+                border: solid red 1px;
+                width: 100%;
+                color: white;
+                font-weight: bold;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+              }
+            }
+            div.attraction-info {
+              border: solid orange 1px;
+              width: 100%;
+              height: 45px;
+              padding: 10px;
+              display: flex;
+              div.attraction-info-mrt {
+                border: solid green 1px;
+                height: 100%;
+                flex: 1;
+                display: flex;
+                align-items: center;
+                div.attraction-info-mrt-name {
+                  border: solid orange 1px;
+                  color: #757575;
+                }
+              }
+              div.attraction-info-category {
+                border: solid yellowgreen 1px;
+                height: 100%;
+                flex: 1;
+                display: flex;
+                align-items: center;
+                position: relative;
+                div.attraction-info-category-name {
+                  position: absolute;
+                  border: solid orange 1px;
+                  color: #757575;
+                  right: 0px;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
   footer {
-    height: 104px;
+    min-height: 104px;
     background-color: #757575;
     display: flex;
     justify-content: center;
@@ -197,6 +311,78 @@ body {
     div.text {
       color: white;
       font-weight: bold;
+    }
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1200px) {
+  body {
+    header {
+      div.top {
+        width: 600px;
+      }
+    }
+    section.top {
+      div.top-main {
+        div.top-main-content {
+          width: 600px;
+        }
+      }
+    }
+    main {
+      section.main {
+        width: 600px;
+        div.attractions {
+          div.attractions-group {
+            div.attraction {
+              width: 47.2%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 361px) and (max-width: 600px) {
+  body {
+    header {
+      div.top {
+        width: 360px;
+      }
+    }
+    section.top {
+      div.top-main {
+        div.top-main-content {
+          width: 360px;
+        }
+      }
+    }
+    section.top {
+      div.hero-image {
+        background-position: -825px -150px;
+      }
+      div.top-main {
+        div.top-main-content {
+          div.search {
+            div.search-bar {
+              width: 285px;
+            }
+          }
+        }
+      }
+    }
+    main {
+      section.main {
+        width: 360px;
+        div.attractions {
+          div.attractions-group {
+            div.attraction {
+              width: 100%;
+            }
+          }
+        }
+      }
     }
   }
 }
