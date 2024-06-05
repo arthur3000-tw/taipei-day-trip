@@ -184,11 +184,11 @@ body main section.main div.list-bar div.mrt-list div.mrt-text-container {
   transition: all 0.3s ease;
 }
 body main section.main div.list-bar div.mrt-list div.mrt-text-container div.mrt-text {
-  color: black;
+  color: #666666;
   padding: 5px 15px 5px 15px;
 }
 body main section.main div.list-bar div.mrt-list div.mrt-text-container div.mrt-text:hover {
-  color: red;
+  color: black;
   cursor: pointer;
 }
 body main section.main div.list-bar div.right {

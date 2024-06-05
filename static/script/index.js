@@ -19,8 +19,8 @@ const attractions_group_node = document.querySelector(".attractions-group");
 let nextPage = null;
 
 // 取得按照排名之捷運站列表
-// let url = "http://0.0.0.0:8000/api/mrts";
-let url = "http://13.213.240.133:8000/api/mrts";
+let url = "/api/mrts";
+// let url = "http://13.213.240.133:8000/api/mrts";
 result = fetchData(url);
 result.then((data) => {
   // 取 mrt array
@@ -44,8 +44,8 @@ result.then((data) => {
 });
 
 // 取得 /api/attractions 資料
-// url = "http://0.0.0.0:8000/api/attractions?page=0";
-url = "http://13.213.240.133:8000/api/attractions?page=0";
+url = "/api/attractions?page=0";
+// url = "http://13.213.240.133:8000/api/attractions?page=0";
 result = fetchData(url);
 result.then((data) => {
   let attractions = data["data"];
@@ -278,10 +278,12 @@ function getTransformMatrix(element) {
   return matrix;
 }
 
-//
+// search by MRT
 function searchByMRT() {
   console.log("click");
   console.log(this.textContent);
+  attractions_group_node.replaceChildren();
+  url = ""
 }
 
 // GET
@@ -289,6 +291,17 @@ async function fetchData(url) {
   return await fetch(url).then((response) => {
     return response.json();
   });
+}
+
+// get nextPage url
+function getNextPageURL(url, splitter, page) {
+  let pre_url = url.split(splitter)[0];
+  if (!isNaN(url.split(splitter)[1])) {
+    return pre_url + splitter + page;
+  } else {
+    let last_url = url.split(splitter)[1].split("&")[1];
+    return pre_url + splitter + page + last_url;
+  }
 }
 
 // EventListener after transition
@@ -307,8 +320,10 @@ const renderPage = function (entries) {
   console.log("bottom!");
   if (nextPage != null) {
     console.log("nextPage not null, nextPage is " + nextPage);
+    url = getNextPageURL(url,"page=",nextPage)
+    console.log(url);
     // url = "http://0.0.0.0:8000/api/attractions?page=" + nextPage;
-    url = "http://13.213.240.133:8000/api/attractions?page=" + nextPage;
+    // url = "http://13.213.240.133:8000/api/attractions?page=" + nextPage;
     result = fetchData(url);
     result.then((data) => {
       let attractions = data["data"];
