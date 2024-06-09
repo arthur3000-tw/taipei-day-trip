@@ -16,17 +16,22 @@ const attractions_group_node = document.querySelector(".attractions-group");
 // 選取 search-input-text
 const search_input_text = document.getElementById("search-input-text");
 search_input_text.value = "";
+search_input_text.addEventListener("keypress", e => {
+  if(e.key === "Enter"){
+    searchByButton()
+  }
+})
 
 // 選取 search-button
 const search_button = document.getElementById("search-button");
 search_button.addEventListener("click", searchByButton);
 
 // 選擇 left-arrow
-let left_arrow = document.getElementById("left-arrow");
+const left_arrow = document.getElementById("left-arrow");
 left_arrow.addEventListener("click", moveLeft);
 
 // 選擇 right-arrow
-let right_arrow = document.getElementById("right-arrow");
+const right_arrow = document.getElementById("right-arrow");
 right_arrow.addEventListener("click", moveRight);
 
 // nextPage
@@ -172,6 +177,18 @@ function renderAttractions(attractions) {
   }
 }
 
+// render error
+function renderError(message) {
+  // 建立 error 區塊
+  const error_node = document.createElement("div");
+  // class name 命名
+  error_node.className = "error";
+  // 加入 attractions group 中
+  attractions_group_node.appendChild(error_node);
+  // 顯示錯誤資訊
+  error_node.textContent = message;
+}
+
 // get transform matrix
 // 輸入 element
 // 輸出 matrix
@@ -182,18 +199,37 @@ function getTransformMatrix(element) {
   return matrix;
 }
 
-//search by button
+// search by button
 function searchByButton() {
+  search_button.removeEventListener("click", searchByButton);
+  let new_url = "/api/attractions?page=0&keyword=" + search_input_text.value;
+  new_url = encodeURI(new_url);
+  // prevent multiple clicks for same query
+  if (new_url == url) {
+    // search_button add event listener
+    search_button.addEventListener("click", searchByButton);
+    return;
+  } else {
+    url = new_url;
+  }
+  // new query
   nextPage = null;
+  // clean attractions_group_node children
   attractions_group_node.replaceChildren();
-  url = "/api/attractions?page=0&keyword=" + search_input_text.value;
-  url = encodeURI(url);
   result = fetchData(url);
   result.then((data) => {
-    let attractions = data["data"];
-    nextPage = data["nextPage"];
-    renderAttractions(attractions);
+    try {
+      let attractions = data["data"];
+      nextPage = data["nextPage"];
+      renderAttractions(attractions);
+    } catch {
+      if (data["error"] == true) {
+        renderError(data["message"]);
+      }
+    }
   });
+  // search_button add event listener
+  search_button.addEventListener("click", searchByButton);
   // MRT List scroll bar go to initial position
   let x_translated = getTransformMatrix(mrt_container_node).m41;
   x_translated *= -1;
@@ -202,10 +238,18 @@ function searchByButton() {
 
 // search by MRT
 function searchByMRT() {
+  let new_url = "/api/attractions?page=0&keyword=" + this.textContent;
+  new_url = encodeURI(new_url);
+  // prevent multiple clicks for same query
+  if (new_url == url) {
+    return;
+  } else {
+    url = new_url;
+  }
+  // new query
   nextPage = null;
+  // clean attractions_group_node children
   attractions_group_node.replaceChildren();
-  url = "/api/attractions?page=0&keyword=" + this.textContent;
-  url = encodeURI(url);
   result = fetchData(url);
   search_input_text.value = this.textContent;
   result.then((data) => {
