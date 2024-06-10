@@ -37,6 +37,9 @@ right_arrow.addEventListener("click", moveRight);
 // nextPage
 let nextPage = null;
 
+// pageLoaded
+let pageLoaded = false
+
 // 取得按照排名之捷運站列表
 let url = "/api/mrts";
 result = fetchData(url);
@@ -59,6 +62,7 @@ result.then((data) => {
   let attractions = data["data"];
   nextPage = data["nextPage"];
   renderAttractions(attractions);
+  pageLoaded = true
 });
 
 // MRT List Scroll Left
@@ -289,7 +293,7 @@ const option = {
 };
 const renderPage = function (entries) {
   //   console.log(entries);
-  if (entries[0].intersectionRatio < 1) return;
+  if (entries[0].intersectionRatio < 1 || pageLoaded == false) return;
   if (nextPage != null) {
     url = getNextPageURL(url, "page=", nextPage);
     result = fetchData(url);
@@ -301,8 +305,5 @@ const renderPage = function (entries) {
   }
 };
 
-// prevent observe on entering or refreshing page
-setTimeout(() => {
-  const observer = new IntersectionObserver(renderPage, option);
-  observer.observe(document.querySelector("footer"));
-}, 1000);
+const observer = new IntersectionObserver(renderPage, option);
+observer.observe(document.querySelector("footer"));
