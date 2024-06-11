@@ -6,8 +6,8 @@
 
 body {
   overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
+  // display: flex;
+  // flex-direction: column;
   height: 100vh;
   header {
     display: flex;
@@ -300,7 +300,7 @@ body {
               }
             }
           }
-          div.error{
+          div.error {
             font-weight: bold;
           }
         }

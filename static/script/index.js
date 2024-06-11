@@ -16,11 +16,11 @@ const attractions_group_node = document.querySelector(".attractions-group");
 // 選取 search-input-text
 const search_input_text = document.getElementById("search-input-text");
 search_input_text.value = "";
-search_input_text.addEventListener("keypress", e => {
-  if(e.key === "Enter"){
-    searchByButton()
+search_input_text.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    searchByButton();
   }
-})
+});
 
 // 選取 search-button
 const search_button = document.getElementById("search-button");
@@ -38,7 +38,7 @@ right_arrow.addEventListener("click", moveRight);
 let nextPage = null;
 
 // pageLoaded
-let pageLoaded = false
+let pageLoaded = false;
 
 // 取得按照排名之捷運站列表
 let url = "/api/mrts";
@@ -62,7 +62,7 @@ result.then((data) => {
   let attractions = data["data"];
   nextPage = data["nextPage"];
   renderAttractions(attractions);
-  pageLoaded = true
+  pageLoaded = true;
 });
 
 // MRT List Scroll Left
@@ -307,3 +307,8 @@ const renderPage = function (entries) {
 
 const observer = new IntersectionObserver(renderPage, option);
 observer.observe(document.querySelector("footer"));
+
+// add after reload let scroll to top
+window.onbeforeunload = function () {
+  window.scrollTo(0, 0);
+};
