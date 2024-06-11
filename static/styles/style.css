@@ -219,6 +219,11 @@ body main section.main div.attractions div.attractions-group div.attraction {
   overflow: hidden;
   height: 242px;
   width: 23.04%;
+  cursor: pointer;
+}
+body main section.main div.attractions div.attractions-group div.attraction:hover {
+  background-color: #d6d6d6;
+  opacity: 90%;
 }
 body main section.main div.attractions div.attractions-group div.attraction div.attraction-img {
   width: 100%;

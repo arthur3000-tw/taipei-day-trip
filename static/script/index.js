@@ -108,6 +108,10 @@ function renderAttractions(attractions) {
     const attraction_node = document.createElement("div");
     // class name 命名
     attraction_node.className = "attraction";
+    // 加入 attraction 連結
+    attraction_node.addEventListener("click", clickAttraction)
+    // 加入 attraction_id 屬性
+    attraction_node.setAttribute("onclick", `window.location='/attraction/${attraction["id"]}'`)
     // 加入 attractions group 中
     attractions_group_node.appendChild(attraction_node);
 
@@ -119,9 +123,9 @@ function renderAttractions(attractions) {
     attraction_node.appendChild(attraction_img);
     // 取得第一張 image 連結
     img_url = attraction["images"][0];
-
     // 設定 image 連結
     attraction_img.style.backgroundImage = `url(${img_url})`;
+
     // 建立 name 區塊
     const attraction_name = document.createElement("div");
     // class name 命名
@@ -263,6 +267,12 @@ function searchByMRT() {
   });
 }
 
+//
+function clickAttraction(){
+  console.log("clickAttraction")
+  console.log(this.attraction_id)
+}
+
 // GET
 async function fetchData(url) {
   return await fetch(url).then((response) => {
@@ -305,10 +315,21 @@ const renderPage = function (entries) {
   }
 };
 
+// add observer
 const observer = new IntersectionObserver(renderPage, option);
 observer.observe(document.querySelector("footer"));
 
-// add after reload let scroll to top
-window.onbeforeunload = function () {
-  window.scrollTo(0, 0);
+// // add after reload let scroll to top
+// window.onbeforeunload = function () {
+//   window.scrollTo(0, 0);
+// };
+
+// window position handling
+document.addEventListener("DOMContentLoaded", function() { 
+  let scrollpos = localStorage.getItem('scrollpos');
+  if (scrollpos) window.scrollTo(0, scrollpos);
+});
+
+window.onbeforeunload = function() {
+  localStorage.setItem('scrollpos', window.scrollY);
 };
