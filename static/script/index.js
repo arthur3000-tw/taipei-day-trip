@@ -7,6 +7,7 @@ let mrt_container_width = mrt_container_node.offsetWidth;
 const mrt_list_node = document.querySelector(".mrt-list");
 // 取得 mrt-list width
 let mrt_list_width = mrt_container_node.offsetWidth;
+
 // 決定 translate scale
 const translate_scale = 0.8;
 
@@ -26,11 +27,11 @@ search_input_text.addEventListener("keypress", (e) => {
 const search_button = document.getElementById("search-button");
 search_button.addEventListener("click", searchByButton);
 
-// 選擇 left-arrow
+// 選取 left-arrow
 const left_arrow = document.getElementById("left-arrow");
 left_arrow.addEventListener("click", moveLeft);
 
-// 選擇 right-arrow
+// 選取 right-arrow
 const right_arrow = document.getElementById("right-arrow");
 right_arrow.addEventListener("click", moveRight);
 
@@ -108,9 +109,7 @@ function renderAttractions(attractions) {
     const attraction_node = document.createElement("div");
     // class name 命名
     attraction_node.className = "attraction";
-    // 加入 attraction 連結
-    attraction_node.addEventListener("click", clickAttraction)
-    // 加入 attraction_id 屬性
+    // 設定 attraction onclick 屬性
     attraction_node.setAttribute("onclick", `window.location='/attraction/${attraction["id"]}'`)
     // 加入 attractions group 中
     attractions_group_node.appendChild(attraction_node);
@@ -267,11 +266,6 @@ function searchByMRT() {
   });
 }
 
-//
-function clickAttraction(){
-  console.log("clickAttraction")
-  console.log(this.attraction_id)
-}
 
 // GET
 async function fetchData(url) {
@@ -292,7 +286,7 @@ function getNextPageURL(url, splitter, page) {
 }
 
 // EventListener after transition
-addEventListener("transitionend", () => {
+mrt_list_node.addEventListener("transitionend", () => {
   right_arrow.addEventListener("click", moveRight);
   left_arrow.addEventListener("click", moveLeft);
 });

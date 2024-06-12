@@ -6,6 +6,8 @@
 
 body {
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
   height: 100vh;
 }
 body header {
@@ -281,12 +283,227 @@ body main section.main div.attractions div.attractions-group div.attraction div.
 body main section.main div.attractions div.attractions-group div.error {
   font-weight: bold;
 }
+body main section.attraction-page {
+  width: 1200px;
+}
+body main section.attraction-page div.top {
+  height: 100px;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-images {
+  position: relative;
+  align-items: center;
+  display: flex;
+  width: 49%;
+  height: 400px;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-images div.image-list {
+  height: 100%;
+  overflow-x: hidden;
+  display: flex;
+  border-radius: 5px;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-images div.image-list div.image-container {
+  display: flex;
+  transition: all 0.3s ease;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-images div.image-list div.image-container div.profile-image {
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-images div.image-scroll-button {
+  width: 100%;
+  height: 36px;
+  position: absolute;
+  display: flex;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-images div.image-scroll-button div.image-left {
+  position: absolute;
+  left: 1%;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-images div.image-scroll-button div.image-left img {
+  opacity: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-images div.image-scroll-button div.image-left img:hover {
+  opacity: 100%;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-images div.image-scroll-button div.image-right {
+  position: absolute;
+  right: 1%;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-images div.image-scroll-button div.image-right img {
+  opacity: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-images div.image-scroll-button div.image-right img:hover {
+  opacity: 100%;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-images div.image-dots {
+  width: 100%;
+  bottom: 1%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-images div.image-dots div.image-dot-group {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 3px 2px;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-images div.image-dots div.image-dot-group div.image-dot {
+  background-color: #dedede;
+  border-radius: 50%;
+  height: 12px;
+  width: 12px;
+  margin: 0px 3px;
+  opacity: 50%;
+  cursor: pointer;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation {
+  width: 49%;
+  display: flex;
+  flex-direction: column;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.attraction-title {
+  flex: 1;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.attraction-title div.attraction-name {
+  font-size: 24px;
+  font-weight: bold;
+  padding: 5px 0px;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.attraction-title div.attraction-category-mrt {
+  font-size: 16px;
+  padding: 5px 0px;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.reservation-form {
+  height: 100%;
+  background-color: #e8e8e8;
+  border-radius: 5px;
+  margin: 10px 0px;
+  padding: 15px 20px;
+  display: flex;
+  flex-direction: column;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.reservation-form div.reservation-title {
+  font-weight: bold;
+  padding: 10px 0px;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.reservation-form div.reservation-content {
+  padding: 10px 0px;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.reservation-form div.reservation-date {
+  padding: 10px 0px;
+  display: flex;
+  align-items: baseline;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.reservation-form div.reservation-date div.date-text {
+  font-weight: bold;
+  margin-right: 10px;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.reservation-form div.reservation-date input.input-date {
+  border: none;
+  position: relative;
+  display: flex;
+  height: 35px;
+  font-size: 16px;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.reservation-form div.reservation-date input.input-date:focus {
+  outline: none;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.reservation-form div.reservation-time {
+  padding: 10px 0px;
+  display: flex;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.reservation-form div.reservation-time div.time-text {
+  font-weight: bold;
+  margin-right: 10px;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.reservation-form div.reservation-time div.time-selection {
+  display: flex;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.reservation-form div.reservation-time div.time-selection input {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  background-color: white;
+  transition: 0.2s all linear;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.reservation-form div.reservation-time div.time-selection input:checked {
+  background-color: #448899;
+  border: 2px white solid;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.reservation-form div.reservation-time div.time-selection label {
+  margin: 0px 5px;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.reservation-form div.reservation-time div.time-selection input.selection-afternoon {
+  margin-left: 10px;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.reservation-form div.reservation-fee {
+  padding: 10px 0px;
+  display: flex;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.reservation-form div.reservation-fee div.fee-title {
+  font-weight: bold;
+  margin-right: 10px;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.reservation-form div.reservation-button {
+  padding: 10px 0px;
+  display: flex;
+}
+body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation div.reservation-form div.reservation-button div.booking-button {
+  background-color: #448899;
+  color: white;
+  font-size: 19px;
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+body main section.attraction-page div.attraction-content hr.seperator {
+  border: 1px solid #e8e8e8;
+  margin: 30px 0px;
+}
+body main section.attraction-page div.attraction-content div.attraction-info div.info-content {
+  padding: 10px 0px;
+}
+body main section.attraction-page div.attraction-content div.attraction-info div.info-address {
+  padding: 10px 0px;
+}
+body main section.attraction-page div.attraction-content div.attraction-info div.info-address div.address-title {
+  font-weight: bold;
+}
+body main section.attraction-page div.attraction-content div.attraction-info div.info-transport {
+  padding: 10px 0px;
+}
+body main section.attraction-page div.attraction-content div.attraction-info div.info-transport div.transport-title {
+  font-weight: bold;
+}
 body footer {
   min-height: 104px;
   background-color: #757575;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 30px;
 }
 body footer div.text {
   color: white;
@@ -325,5 +542,37 @@ body footer div.text {
   }
   body main section.main div.attractions div.attractions-group div.attraction {
     width: 100%;
+  }
+}
+@media (min-width: 881px) and (max-width: 1200px) {
+  body header div.top {
+    width: 95vw;
+  }
+  body main section.attraction-page {
+    width: 95vw;
+  }
+}
+@media (min-width: 361px) and (max-width: 880px) {
+  body header div.top {
+    width: 95vw;
+  }
+  body main section.attraction-page {
+    width: 99vw;
+  }
+  body main section.attraction-page div.top {
+    height: 53px;
+  }
+  body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-images {
+    width: 100%;
+  }
+  body main section.attraction-page div.attraction-content div.attraction-profile div.attraction-reservation {
+    width: 100%;
+    padding: 20px 20px;
+  }
+  body main section.attraction-page div.attraction-content hr.seperator {
+    margin-top: 10px;
+  }
+  body main section.attraction-page div.attraction-content div.attraction-info {
+    padding: 0px 20px;
   }
 }/*# sourceMappingURL=style.css.map */

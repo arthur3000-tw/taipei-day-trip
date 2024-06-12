@@ -6,8 +6,8 @@
 
 body {
   overflow-x: hidden;
-  // display: flex;
-  // flex-direction: column;
+  display: flex;
+  flex-direction: column;
   height: 100vh;
   header {
     display: flex;
@@ -239,7 +239,7 @@ body {
             height: 242px;
             width: 23.04%;
             cursor: pointer;
-            &:hover{
+            &:hover {
               background-color: #d6d6d6;
               opacity: 90%;
             }
@@ -311,6 +311,238 @@ body {
         }
       }
     }
+    //
+    //
+    // attraction.html
+    //
+    //
+    section.attraction-page {
+      // border: solid green 3px;
+      width: 1200px;
+      div.top {
+        // border: solid orange 3px;
+        height: 100px;
+      }
+      div.attraction-content {
+        // border: solid red 3px;
+        div.attraction-profile {
+          // border: solid blue 3px;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          div.attraction-images {
+            // border: solid green 3px;
+            position: relative;
+            align-items: center;
+            display: flex;
+            width: 49%;
+            height: 400px;
+            div.image-list {
+              height: 100%;
+              overflow-x: hidden;
+              display: flex;
+              border-radius: 5px;
+              div.image-container {
+                display: flex;
+                transition: all 0.3s ease;
+                div.profile-image {
+                  // border: yellowgreen solid 3px;
+                  height: 100%;
+                  background-position: center;
+                  background-repeat: no-repeat;
+                  background-size: cover;
+                }
+              }
+            }
+            div.image-scroll-button {
+              width: 100%;
+              height: 36px;
+              position: absolute;
+              display: flex;
+              div.image-left {
+                position: absolute;
+                left: 1%;
+                img {
+                  opacity: 50%;
+                  width: 36px;
+                  height: 36px;
+                  cursor: pointer;
+                  transition: all 0.3s ease;
+                  &:hover {
+                    opacity: 100%;
+                  }
+                }
+              }
+              div.image-right {
+                position: absolute;
+                right: 1%;
+                img {
+                  opacity: 50%;
+                  width: 36px;
+                  height: 36px;
+                  cursor: pointer;
+                  transition: all 0.3s ease;
+                  &:hover {
+                    opacity: 100%;
+                  }
+                }
+              }
+            }
+            div.image-dots {
+              // border: solid 1px blue;
+              width: 100%;
+              bottom: 1%;
+              position: absolute;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              div.image-dot-group {
+                // border: solid 1px red;
+                display: flex;
+                justify-content: space-between;
+                // height: 15px;
+                background-color: rgba(rgb(0, 0, 0), 0.2);
+                border-radius: 10px;
+                padding: 3px 2px;
+                div.image-dot {
+                  background-color: #dedede;
+                  border-radius: 50%;
+                  height: 12px;
+                  width: 12px;
+                  margin: 0px 3px;
+                  opacity: 50%;
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+          div.attraction-reservation {
+            // border: solid red 3px;
+            width: 49%;
+            // height: 400px;
+            display: flex;
+            flex-direction: column;
+            div.attraction-title {
+              flex: 1;
+              div.attraction-name {
+                font-size: 24px;
+                font-weight: bold;
+                padding: 5px 0px;
+              }
+              div.attraction-category-mrt {
+                font-size: 16px;
+                padding: 5px 0px;
+              }
+            }
+            div.reservation-form {
+              height: 100%;
+              background-color: #e8e8e8;
+              border-radius: 5px;
+              margin: 10px 0px;
+              padding: 15px 20px;
+              display: flex;
+              flex-direction: column;
+              div.reservation-title {
+                font-weight: bold;
+                padding: 10px 0px;
+              }
+              div.reservation-content {
+                padding: 10px 0px;
+              }
+              div.reservation-date {
+                padding: 10px 0px;
+                display: flex;
+                align-items: baseline;
+                div.date-text {
+                  font-weight: bold;
+                  margin-right: 10px;
+                }
+                input.input-date {
+                  border: none;
+                  position: relative;
+                  display: flex;
+                  height: 35px;
+                  font-size: 16px;
+                  &:focus {
+                    outline: none;
+                  }
+                }
+              }
+              div.reservation-time {
+                padding: 10px 0px;
+                display: flex;
+                div.time-text {
+                  font-weight: bold;
+                  margin-right: 10px;
+                }
+                div.time-selection {
+                  display: flex;
+                  input {
+                    appearance: none;
+                    border-radius: 50%;
+                    width: 22px;
+                    height: 22px;
+                    background-color: white;
+                    transition: 0.2s all linear;
+                    &:checked {
+                      background-color: #448899;
+                      border: 2px white solid;
+                    }
+                  }
+                  label {
+                    margin: 0px 5px;
+                  }
+                  input.selection-afternoon{
+                    margin-left: 10px;
+                  }
+                }
+              }
+              div.reservation-fee {
+                padding: 10px 0px;
+                display: flex;
+                div.fee-title {
+                  font-weight: bold;
+                  margin-right: 10px;
+                }
+              }
+              div.reservation-button {
+                padding: 10px 0px;
+                display: flex;
+                div.booking-button {
+                  background-color: #448899;
+                  color: white;
+                  font-size: 19px;
+                  padding: 5px 15px;
+                  border-radius: 5px;
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+        }
+        hr.seperator {
+          border: 1px solid #e8e8e8;
+          margin: 30px 0px;
+        }
+        div.attraction-info {
+          div.info-content {
+            padding: 10px 0px;
+          }
+          div.info-address {
+            padding: 10px 0px;
+            div.address-title {
+              font-weight: bold;
+            }
+          }
+          div.info-transport {
+            padding: 10px 0px;
+            div.transport-title {
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
   }
   footer {
     min-height: 104px;
@@ -318,6 +550,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 30px;
     div.text {
       color: white;
       font-weight: bold;
@@ -390,6 +623,59 @@ body {
             div.attraction {
               width: 100%;
             }
+          }
+        }
+      }
+    }
+  }
+}
+//
+//
+// attraction html
+//
+//
+@media (min-width: 881px) and (max-width: 1200px) {
+  body {
+    header {
+      div.top {
+        width: 95vw;
+      }
+    }
+    main {
+      section.attraction-page {
+        width: 95vw;
+      }
+    }
+  }
+}
+@media (min-width: 361px) and (max-width: 880px) {
+  body {
+    header {
+      div.top {
+        width: 95vw;
+      }
+    }
+    main {
+      section.attraction-page {
+        width: 99vw;
+        div.top {
+          height: 53px;
+        }
+        div.attraction-content {
+          div.attraction-profile {
+            div.attraction-images {
+              width: 100%;
+            }
+            div.attraction-reservation {
+              width: 100%;
+              padding: 20px 20px;
+            }
+          }
+          hr.seperator {
+            margin-top: 10px;
+          }
+          div.attraction-info{
+            padding: 0px 20px;
           }
         }
       }
