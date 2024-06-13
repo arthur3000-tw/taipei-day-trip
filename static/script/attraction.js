@@ -3,15 +3,13 @@ const url = "/api" + document.location.pathname;
 
 // 選取 attraction-images
 const attraction_images_node = document.querySelector(".attraction-images");
-let attraction_images_width = attraction_images_node.offsetWidth;
+let attraction_images_width = attraction_images_node.getBoundingClientRect()["width"];
 
 // 選取 images-container
 const image_container_node = document.querySelector(".image-container");
-let image_container_width = image_container_node.offsetWidth;
 
 // 選取 image-list
 const image_list_node = document.querySelector(".image-list");
-let image_list_width = image_list_node.offsetWidth;
 
 // 選取 left-arrow
 const left_arrow = document.getElementById("left-arrow");
@@ -90,6 +88,7 @@ function renderAttraction(attraction) {
     image_node.className = "profile-image";
     // 加入 images-container
     image_container_node.appendChild(image_node);
+    
     // 設定 background image
     img_url = attraction["images"][i];
     image_node.style.backgroundImage = `url(${img_url})`;
@@ -113,15 +112,22 @@ function renderAttraction(attraction) {
   }
   // set image index max
   image_index_max = attraction["images"].length - 1;
+  
+  // set image width
+  const image_nodes = document.querySelectorAll(".profile-image");
+  image_nodes.forEach((image_node) => {
+    attraction_images_width = attraction_images_node.getBoundingClientRect()["width"];
+    image_node.style.width = `${attraction_images_width}px`;
+  });
 }
 
 // image scroll left
 function moveLeft() {
   left_arrow.removeEventListener("click", moveLeft);
   // 更新 image container width
-  image_container_width = image_container_node.offsetWidth;
+  let image_container_width = image_container_node.getBoundingClientRect()["width"];
   // 更新 image list width
-  image_list_width = image_list_node.offsetWidth;
+  let image_list_width = image_list_node.getBoundingClientRect()["width"];
   //確認當前 image index
   if (Number(image_index) <= 0) {
     // index <= 0 時，目前在第一張照片
@@ -145,10 +151,6 @@ function moveLeft() {
 // image scroll right
 function moveRight() {
   right_arrow.removeEventListener("click", moveRight);
-  // 更新 image container width
-  image_container_width = image_container_node.offsetWidth;
-  // 更新 image list width
-  image_list_width = image_list_node.offsetWidth;
   //確認當前 image index
   if (Number(image_index) >= Number(image_index_max)) {
     // index >= index_max 時，目前在最後一張照片
@@ -237,7 +239,7 @@ window.addEventListener("resize", () => {
   const image_nodes = document.querySelectorAll(".profile-image");
   // 更新所有 image width
   image_nodes.forEach((image_node) => {
-    attraction_images_width = attraction_images_node.offsetWidth;
+    attraction_images_width = attraction_images_node.getBoundingClientRect()["width"];
     image_node.style.width = `${attraction_images_width}px`;
   });
   // 確認目前 index
