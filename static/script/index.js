@@ -7,6 +7,7 @@ let mrt_container_width = mrt_container_node.offsetWidth;
 const mrt_list_node = document.querySelector(".mrt-list");
 // 取得 mrt-list width
 let mrt_list_width = mrt_container_node.offsetWidth;
+
 // 決定 translate scale
 const translate_scale = 0.8;
 
@@ -16,26 +17,29 @@ const attractions_group_node = document.querySelector(".attractions-group");
 // 選取 search-input-text
 const search_input_text = document.getElementById("search-input-text");
 search_input_text.value = "";
-search_input_text.addEventListener("keypress", e => {
-  if(e.key === "Enter"){
-    searchByButton()
+search_input_text.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    searchByButton();
   }
-})
+});
 
 // 選取 search-button
 const search_button = document.getElementById("search-button");
 search_button.addEventListener("click", searchByButton);
 
-// 選擇 left-arrow
+// 選取 left-arrow
 const left_arrow = document.getElementById("left-arrow");
 left_arrow.addEventListener("click", moveLeft);
 
-// 選擇 right-arrow
+// 選取 right-arrow
 const right_arrow = document.getElementById("right-arrow");
 right_arrow.addEventListener("click", moveRight);
 
 // nextPage
 let nextPage = null;
+
+// pageLoaded
+let pageLoaded = false;
 
 // 取得按照排名之捷運站列表
 let url = "/api/mrts";
@@ -59,6 +63,7 @@ result.then((data) => {
   let attractions = data["data"];
   nextPage = data["nextPage"];
   renderAttractions(attractions);
+  pageLoaded = true;
 });
 
 // MRT List Scroll Left
@@ -104,6 +109,8 @@ function renderAttractions(attractions) {
     const attraction_node = document.createElement("div");
     // class name 命名
     attraction_node.className = "attraction";
+    // 設定 attraction onclick 屬性
+    attraction_node.setAttribute("onclick", `window.location='/attraction/${attraction["id"]}'`)
     // 加入 attractions group 中
     attractions_group_node.appendChild(attraction_node);
 
@@ -115,9 +122,9 @@ function renderAttractions(attractions) {
     attraction_node.appendChild(attraction_img);
     // 取得第一張 image 連結
     img_url = attraction["images"][0];
-
     // 設定 image 連結
     attraction_img.style.backgroundImage = `url(${img_url})`;
+
     // 建立 name 區塊
     const attraction_name = document.createElement("div");
     // class name 命名
@@ -259,6 +266,7 @@ function searchByMRT() {
   });
 }
 
+
 // GET
 async function fetchData(url) {
   return await fetch(url).then((response) => {
@@ -278,7 +286,7 @@ function getNextPageURL(url, splitter, page) {
 }
 
 // EventListener after transition
-addEventListener("transitionend", () => {
+mrt_list_node.addEventListener("transitionend", () => {
   right_arrow.addEventListener("click", moveRight);
   left_arrow.addEventListener("click", moveLeft);
 });
@@ -289,7 +297,7 @@ const option = {
 };
 const renderPage = function (entries) {
   //   console.log(entries);
-  if (entries[0].intersectionRatio < 1) return;
+  if (entries[0].intersectionRatio < 1 || pageLoaded == false) return;
   if (nextPage != null) {
     url = getNextPageURL(url, "page=", nextPage);
     result = fetchData(url);
@@ -301,8 +309,21 @@ const renderPage = function (entries) {
   }
 };
 
-// prevent observe on entering or refreshing page
-setTimeout(() => {
-  const observer = new IntersectionObserver(renderPage, option);
-  observer.observe(document.querySelector("footer"));
-}, 1000);
+// add observer
+const observer = new IntersectionObserver(renderPage, option);
+observer.observe(document.querySelector("footer"));
+
+// // add after reload let scroll to top
+// window.onbeforeunload = function () {
+//   window.scrollTo(0, 0);
+// };
+
+// window position handling
+document.addEventListener("DOMContentLoaded", function() { 
+  let scrollpos = localStorage.getItem('scrollpos');
+  if (scrollpos) window.scrollTo(0, scrollpos);
+});
+
+window.onbeforeunload = function() {
+  localStorage.setItem('scrollpos', window.scrollY);
+};
