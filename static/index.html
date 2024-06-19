@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./static/styles/style.css" />
   </head>
   <body>
+    <object type="text/html" data="./static/header.html"></object>
     <header>
       <div class="top">
         <nav>
@@ -15,18 +16,40 @@
           </div>
           <div>
             <ul>
-              <li>預定行程</li>
-              <li>登入/註冊</li>
+              <li id="booking-button">預定行程</li>
+              <li id="signin-button">登入/註冊</li>
+              <li id="signout-button">登出系統</li>
             </ul>
           </div>
         </nav>
       </div>
     </header>
-    <section class="top">
+    <div class="signin-layer">
+      <div class="signin-form">
+        <div class="top-decorator"></div>
+        <div class="form-content">
+          <div class="cancel"><img /></div>
+          <div class="content-title" id="form-title">註冊會員帳號</div>
+          <div class="form-input form-name">
+            <input type="text" id="form-name" placeholder="輸入姓名" />
+          </div>
+          <div class="form-input">
+            <input type="email" id="form-email" placeholder="輸入電子郵件" />
+          </div>
+          <div class="form-input">
+            <input type="password" id="form-password" placeholder="輸入密碼" />
+          </div>
+          <div class="form-input form-button" id="form-button">註冊新帳戶</div>
+          <div class="form-response">註冊成功</div>
+          <div class="form-hint">已經有帳戶了？點此登入</div>
+        </div>
+      </div>
+    </div>
+    <section class="hero">
       <div class="hero-image"></div>
-      <div class="top-main">
-        <div class="top-main-content">
-          <div class="top-main-text">
+      <div class="hero-main">
+        <div class="hero-main-content">
+          <div class="hero-main-text">
             <div class="slogan-main">輕鬆享受台北一日悠閒</div>
             <div class="slogan-sub">探索每個角落，體驗城市的深度旅遊行程</div>
           </div>
@@ -75,5 +98,6 @@
       <div class="text">COPYRIGHT © 2021 台北一日遊</div>
     </footer>
     <script src="./static/script/index.js" defer></script>
+    <script src="./static/script/signin.js" defer></script>
   </body>
 </html>

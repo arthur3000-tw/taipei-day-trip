@@ -41,13 +41,106 @@ body {
               text-decoration: none;
               font-size: 16px;
               padding: 10px;
+              cursor: pointer;
+            }
+            & #signout-button{
+              display: none;
             }
           }
         }
       }
     }
   }
-  section.top {
+  div.signin-layer {
+    border: solid 3px red;
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    background-color: rgba(rgb(0, 0, 0), 0.4);
+    div.signin-form {
+      border: solid 3px orange;
+      width: 340px;
+      position: absolute;
+      top: 80px;
+      background-color: white;
+      border-radius: 5px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      div.top-decorator {
+        width: 100%;
+        height: 10px;
+        background: linear-gradient(270deg, #337788 0%, #66aabb 100%);
+      }
+      div.form-content {
+        position: relative;
+        width: 90%;
+        padding: 15px 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        div.cancel {
+          position: absolute;
+          right: 0;
+          img {
+            content: url("../images/x-img.png");
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+          }
+        }
+        div.content-title {
+          font-size: 24px;
+          font-weight: bold;
+          padding: 5px 0px;
+        }
+        div.form-input {
+          border: 1px solid #cccccc;
+          border-radius: 5px;
+          width: 100%;
+          height: 50px;
+          display: flex;
+          align-items: center;
+          margin: 5px 0px;
+          input {
+            position: relative;
+            left: 15px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            line-height: 16px;
+            &::placeholder {
+              font-size: 16px;
+            }
+            &:-webkit-autofill {
+              -webkit-background-clip: text;
+            }
+          }
+          &.form-button {
+            background-color: #337788;
+            border: none;
+            color: white;
+            font-size: 19px;
+            justify-content: center;
+            cursor: pointer;
+          }
+        }
+        div.form-response {
+          padding: 5px 0px;
+        }
+        div.form-hint {
+          color: #666666;
+          padding: 5px 0px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  section.hero {
     // border: solid orange 3px;
     position: relative;
     height: 320px;
@@ -60,7 +153,7 @@ body {
       position: relative;
       z-index: -10;
     }
-    div.top-main {
+    div.hero-main {
       //   border: solid orange 3px;
       position: absolute;
       height: 50%;
@@ -70,12 +163,12 @@ body {
       margin: 10px;
       display: flex;
       justify-content: center;
-      div.top-main-content {
+      div.hero-main-content {
         // border: solid blue 3px;
         position: relative;
         width: 1200px;
         color: white;
-        div.top-main-text {
+        div.hero-main-text {
           // border: solid red 3px;
           height: 50%;
           position: relative;
@@ -565,9 +658,9 @@ body {
         width: 90vw;
       }
     }
-    section.top {
-      div.top-main {
-        div.top-main-content {
+    section.hero {
+      div.hero-main {
+        div.hero-main-content {
           width: 90vw;
         }
       }
@@ -594,19 +687,13 @@ body {
         width: 90vw;
       }
     }
-    section.top {
-      div.top-main {
-        div.top-main-content {
-          width: 90vw;
-        }
-      }
-    }
-    section.top {
+    section.hero {
       div.hero-image {
         background-position: -825px -150px;
       }
-      div.top-main {
-        div.top-main-content {
+      div.hero-main {
+        div.hero-main-content {
+          width: 90vw;
           div.search {
             div.search-bar {
               width: 285px;
