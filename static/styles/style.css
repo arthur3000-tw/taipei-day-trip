@@ -49,7 +49,6 @@ body header div.top nav div ul #signout-button {
   display: none;
 }
 body div.signin-layer {
-  border: solid 3px red;
   position: fixed;
   z-index: 10;
   width: 100%;
@@ -59,7 +58,6 @@ body div.signin-layer {
   background-color: rgba(0, 0, 0, 0.4);
 }
 body div.signin-layer div.signin-form {
-  border: solid 3px orange;
   width: 340px;
   position: absolute;
   top: 80px;

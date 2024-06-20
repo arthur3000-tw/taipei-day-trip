@@ -85,6 +85,7 @@ function renderNullPage() {
   toggleFormContent();
 }
 
+// email 格式驗證
 function isEmailValid(email) {
   // RFC 2822 standard
   const email_pattern =
@@ -94,6 +95,7 @@ function isEmailValid(email) {
 
 //註冊流程
 function register() {
+  showFormResponse("驗證中...", "orange");
   const form_name = document.querySelector("#form-name");
   const form_email = document.querySelector("#form-email");
   const form_password = document.querySelector("#form-password");
