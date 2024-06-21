@@ -11,6 +11,7 @@ import json
 import jwt
 import bcrypt
 import datetime
+import os
 
 
 app = FastAPI()
@@ -23,8 +24,8 @@ security = HTTPBearer()
 # 資料庫訊息
 myDB = {
     "host": "localhost",
-    "user": "root",
-    "password": "password",
+    "user": os.environ.get("DB_USER"),
+    "password": os.environ.get("DB_PASS"),
     "database": "taipei_day_trip"
 }
 
@@ -308,7 +309,7 @@ def validateUser(userAuth: UserAuth):
 
 
 # jwt 加密參數
-JWT_SECRET_KEY = "s5Iyn8GN2fj8CRS3hY5lE5G7q90jzLn2pHqwts3pKRXeoR6KQnNFmTj8DPcWs2t"
+JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
 EXPIRED_DAYS = 7
 JWT_ALGORITHM = "HS256"
 
