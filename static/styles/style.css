@@ -43,12 +43,106 @@ body header div.top nav div ul li {
   text-decoration: none;
   font-size: 16px;
   padding: 10px;
+  cursor: pointer;
 }
-body section.top {
+body header div.top nav div ul #signout-button {
+  display: none;
+}
+body div.signin-layer {
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+body div.signin-layer div.signin-form {
+  width: 340px;
+  position: absolute;
+  top: 80px;
+  background-color: white;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+body div.signin-layer div.signin-form div.top-decorator {
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(270deg, #337788 0%, #66aabb 100%);
+}
+body div.signin-layer div.signin-form div.form-content {
+  position: relative;
+  width: 90%;
+  padding: 15px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+body div.signin-layer div.signin-form div.form-content div.cancel {
+  position: absolute;
+  right: 0;
+}
+body div.signin-layer div.signin-form div.form-content div.cancel img {
+  content: url("../images/x-img.png");
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+body div.signin-layer div.signin-form div.form-content div.content-title {
+  font-size: 24px;
+  font-weight: bold;
+  padding: 5px 0px;
+}
+body div.signin-layer div.signin-form div.form-content div.form-input {
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  margin: 5px 0px;
+}
+body div.signin-layer div.signin-form div.form-content div.form-input input {
+  position: relative;
+  left: 15px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  line-height: 16px;
+}
+body div.signin-layer div.signin-form div.form-content div.form-input input::-moz-placeholder {
+  font-size: 16px;
+}
+body div.signin-layer div.signin-form div.form-content div.form-input input::placeholder {
+  font-size: 16px;
+}
+body div.signin-layer div.signin-form div.form-content div.form-input input:-webkit-autofill {
+  -webkit-background-clip: text;
+}
+body div.signin-layer div.signin-form div.form-content div.form-input.form-button {
+  background-color: #337788;
+  border: none;
+  color: white;
+  font-size: 19px;
+  justify-content: center;
+  cursor: pointer;
+}
+body div.signin-layer div.signin-form div.form-content div.form-response {
+  padding: 5px 0px;
+}
+body div.signin-layer div.signin-form div.form-content div.form-hint {
+  color: #666666;
+  padding: 5px 0px;
+  cursor: pointer;
+}
+body section.hero {
   position: relative;
   height: 320px;
 }
-body section.top div.hero-image {
+body section.hero div.hero-image {
   height: 480px;
   background-image: url("../images/welcome-image.png");
   background-position: center;
@@ -57,7 +151,7 @@ body section.top div.hero-image {
   position: relative;
   z-index: -10;
 }
-body section.top div.top-main {
+body section.hero div.hero-main {
   position: absolute;
   height: 50%;
   top: 25%;
@@ -67,32 +161,32 @@ body section.top div.top-main {
   display: flex;
   justify-content: center;
 }
-body section.top div.top-main div.top-main-content {
+body section.hero div.hero-main div.hero-main-content {
   position: relative;
   width: 1200px;
   color: white;
 }
-body section.top div.top-main div.top-main-content div.top-main-text {
+body section.hero div.hero-main div.hero-main-content div.hero-main-text {
   height: 50%;
   position: relative;
 }
-body section.top div.top-main div.top-main-content div.top-main-text div.slogan-main {
+body section.hero div.hero-main div.hero-main-content div.hero-main-text div.slogan-main {
   font-size: 28px;
   font-weight: bold;
 }
-body section.top div.top-main div.top-main-content div.top-main-text div.slogan-sub {
+body section.hero div.hero-main div.hero-main-content div.hero-main-text div.slogan-sub {
   position: absolute;
   font-size: 16px;
   font-weight: bold;
   bottom: 0px;
 }
-body section.top div.top-main div.top-main-content div.search {
+body section.hero div.hero-main div.hero-main-content div.search {
   position: absolute;
   height: 46px;
   width: 100%;
   top: 100px;
 }
-body section.top div.top-main div.top-main-content div.search div.search-bar {
+body section.hero div.hero-main div.hero-main-content div.search div.search-bar {
   position: relative;
   display: flex;
   height: 100%;
@@ -101,10 +195,10 @@ body section.top div.top-main div.top-main-content div.search div.search-bar {
   border-radius: 5px;
   overflow: hidden;
 }
-body section.top div.top-main div.top-main-content div.search div.search-bar div.search-input {
+body section.hero div.hero-main div.hero-main-content div.search div.search-bar div.search-input {
   width: 100%;
 }
-body section.top div.top-main div.top-main-content div.search div.search-bar div.search-input input {
+body section.hero div.hero-main div.hero-main-content div.search div.search-bar div.search-input input {
   position: absolute;
   border: none;
   outline: none;
@@ -114,15 +208,15 @@ body section.top div.top-main div.top-main-content div.search div.search-bar div
   font-size: 16px;
   line-height: 16px;
 }
-body section.top div.top-main div.top-main-content div.search div.search-bar div.search-input ::-moz-placeholder {
+body section.hero div.hero-main div.hero-main-content div.search div.search-bar div.search-input ::-moz-placeholder {
   font-size: 16px;
   font-weight: bold;
 }
-body section.top div.top-main div.top-main-content div.search div.search-bar div.search-input ::placeholder {
+body section.hero div.hero-main div.hero-main-content div.search div.search-bar div.search-input ::placeholder {
   font-size: 16px;
   font-weight: bold;
 }
-body section.top div.top-main div.top-main-content div.search div.search-bar div.magnifier {
+body section.hero div.hero-main div.hero-main-content div.search div.search-bar div.magnifier {
   position: absolute;
   background-color: #448899;
   width: 60px;
@@ -514,7 +608,7 @@ body footer div.text {
   body header div.top {
     width: 90vw;
   }
-  body section.top div.top-main div.top-main-content {
+  body section.hero div.hero-main div.hero-main-content {
     width: 90vw;
   }
   body main section.main {
@@ -528,13 +622,13 @@ body footer div.text {
   body header div.top {
     width: 90vw;
   }
-  body section.top div.top-main div.top-main-content {
-    width: 90vw;
-  }
-  body section.top div.hero-image {
+  body section.hero div.hero-image {
     background-position: -825px -150px;
   }
-  body section.top div.top-main div.top-main-content div.search div.search-bar {
+  body section.hero div.hero-main div.hero-main-content {
+    width: 90vw;
+  }
+  body section.hero div.hero-main div.hero-main-content div.search div.search-bar {
     width: 285px;
   }
   body main section.main {

@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Attraction</title>
     <link rel="stylesheet" href="../static/styles/style.css" />
+    <script src="../static/script/attraction.js" defer></script>
+    <script src="../static/script/signin.js" defer></script>
   </head>
   <body>
     <header>
@@ -15,13 +17,35 @@
           </div>
           <div>
             <ul>
-              <li>預定行程</li>
-              <li>登入/註冊</li>
+              <li id="booking-button">預定行程</li>
+              <li id="signin-button">登入/註冊</li>
+              <li id="signout-button">登出系統</li>
             </ul>
           </div>
         </nav>
       </div>
     </header>
+    <div class="signin-layer">
+      <div class="signin-form">
+        <div class="top-decorator"></div>
+        <div class="form-content">
+          <div class="cancel"><img /></div>
+          <div class="content-title" id="form-title">註冊會員帳號</div>
+          <div class="form-input form-name">
+            <input type="text" id="form-name" placeholder="輸入姓名" />
+          </div>
+          <div class="form-input">
+            <input type="email" id="form-email" placeholder="輸入電子郵件" />
+          </div>
+          <div class="form-input">
+            <input type="password" id="form-password" placeholder="輸入密碼" />
+          </div>
+          <div class="form-input form-button" id="form-button">註冊新帳戶</div>
+          <div class="form-response">註冊成功</div>
+          <div class="form-hint">已經有帳戶了？點此登入</div>
+        </div>
+      </div>
+    </div>
     <main>
       <section class="attraction-page">
         <div class="top"></div>
@@ -63,7 +87,7 @@
                 </div>
                 <div class="reservation-date">
                   <div class="date-text">選擇日期：</div>
-                  <input type="date" class="input-date" id="dateChoice"/>
+                  <input type="date" class="input-date" id="dateChoice" />
                 </div>
                 <div class="reservation-time">
                   <div class="time-text">選擇時間：</div>
@@ -116,6 +140,5 @@
     <footer class="footer">
       <div class="text">COPYRIGHT © 2021 台北一日遊</div>
     </footer>
-    <script src="../static/script/attraction.js" defer></script>
   </body>
 </html>
