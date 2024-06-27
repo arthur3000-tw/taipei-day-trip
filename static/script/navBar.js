@@ -21,16 +21,15 @@ function navBookingButton() {
   if (IS_AUTH_STATUS === true) {
     location.href = "/booking";
   } else {
-    SIGN_IN_LOCATION = "/booking"
+    SIGN_IN_LOCATION = "/booking";
     toggleSignInForm(this);
   }
 }
 
 // 點選 登入/註冊按鈕
-function signInButton(){
-    SIGN_IN_LOCATION = location.href
-    console.log(SIGN_IN_LOCATION)
-    toggleSignInForm(this);
+function signInButton() {
+  SIGN_IN_LOCATION = location.href;
+  toggleSignInForm(this);
 }
 
 // 登入 nav bar
@@ -128,8 +127,7 @@ function toggleFormContent() {
 }
 
 // 登入/註冊頁面與主頁面顯示切換
-function toggleSignInForm(element) {
-    console.log(element)
+function toggleSignInForm() {
   // 選取 sign in layer
   const signIn_layer_node = document.querySelector(".signin-layer");
   //

@@ -59,7 +59,6 @@ function deleteBooking() {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
       if (data["ok"] === true) {
         deleteBooking()
         location.reload()
