@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Attraction</title>
     <link rel="stylesheet" href="../static/styles/style.css" />
+    <script src="../static/script/getToken.js" defer></script>
+    <script src="../static/script/authStatus.js" defer></script>
+    <script src="../static/script/authorizaion.js" defer></script>
+    <script src="../static/script/navBar.js" defer></script>
+    <script src="../static/script/bookingAttraction.js" defer></script>
     <script src="../static/script/attraction.js" defer></script>
-    <script src="../static/script/signin.js" defer></script>
   </head>
   <body>
     <header>
@@ -17,7 +21,7 @@
           </div>
           <div>
             <ul>
-              <li id="booking-button">預定行程</li>
+              <li id="nav-booking-button">預定行程</li>
               <li id="signin-button">登入/註冊</li>
               <li id="signout-button">登出系統</li>
             </ul>
@@ -48,7 +52,7 @@
     </div>
     <main>
       <section class="attraction-page">
-        <div class="top"></div>
+        <div class="attraction-top"></div>
         <div class="attraction-content">
           <div class="attraction-profile">
             <div class="attraction-images">
@@ -87,7 +91,12 @@
                 </div>
                 <div class="reservation-date">
                   <div class="date-text">選擇日期：</div>
-                  <input type="date" class="input-date" id="dateChoice" />
+                  <input
+                    type="date"
+                    class="input-date"
+                    id="dateChoice"
+                    required="required"
+                  />
                 </div>
                 <div class="reservation-time">
                   <div class="time-text">選擇時間：</div>
@@ -99,6 +108,7 @@
                       value="2000"
                       class="selection-morning"
                       onclick="setPrice.call(this)"
+                      required="required"
                     />
                     <label for="timeChoice1">上半天</label>
                     <input
@@ -108,6 +118,7 @@
                       value="2500"
                       class="selection-afternoon"
                       onclick="setPrice.call(this)"
+                      required="required"
                     />
                     <label for="timeChoice2">下半天</label>
                   </div>
@@ -118,11 +129,12 @@
                 </div>
                 <div class="reservation-button">
                   <div class="booking-button">開始預約行程</div>
+                  <div class="booking-result"></div>
                 </div>
               </div>
             </div>
           </div>
-          <hr class="seperator" />
+          <hr class="separator" />
           <div class="attraction-info">
             <div class="info-content"></div>
             <div class="info-address">

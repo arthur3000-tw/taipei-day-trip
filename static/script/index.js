@@ -1,3 +1,19 @@
+// 初始化
+initialize();
+
+// 初始化函式
+async function initialize() {
+  // 確認是否登入
+  if (await isAuthorized()) {
+    // 設置登入狀態
+    IS_AUTH_STATUS = true;
+  }
+  // 根據登入狀態渲染 nav bar
+  renderNavBar(IS_AUTH_STATUS);
+}
+
+// 以下渲染 index.html 頁面
+
 // 選取 mrt-text-container
 const mrt_container_node = document.querySelector(".mrt-text-container");
 // 取得 mrt-text-container width
@@ -110,7 +126,10 @@ function renderAttractions(attractions) {
     // class name 命名
     attraction_node.className = "attraction";
     // 設定 attraction onclick 屬性
-    attraction_node.setAttribute("onclick", `window.location='/attraction/${attraction["id"]}'`)
+    attraction_node.setAttribute(
+      "onclick",
+      `window.location='/attraction/${attraction["id"]}'`
+    );
     // 加入 attractions group 中
     attractions_group_node.appendChild(attraction_node);
 
@@ -266,7 +285,6 @@ function searchByMRT() {
   });
 }
 
-
 // GET
 async function fetchData(url) {
   return await fetch(url).then((response) => {
@@ -319,11 +337,11 @@ observer.observe(document.querySelector("footer"));
 // };
 
 // window position handling
-document.addEventListener("DOMContentLoaded", function() { 
-  let scrollpos = localStorage.getItem('scrollpos');
+document.addEventListener("DOMContentLoaded", function () {
+  let scrollpos = localStorage.getItem("scrollpos");
   if (scrollpos) window.scrollTo(0, scrollpos);
 });
 
-window.onbeforeunload = function() {
-  localStorage.setItem('scrollpos', window.scrollY);
+window.onbeforeunload = function () {
+  localStorage.setItem("scrollpos", window.scrollY);
 };

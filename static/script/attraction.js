@@ -1,9 +1,26 @@
+// 初始化
+initialize();
+
+// 初始化函式
+async function initialize() {
+  // 確認是否登入
+  if (await isAuthorized()) {
+    // 設置登入狀態
+    IS_AUTH_STATUS = true;
+  }
+  // 根據登入狀態渲染 nav bar
+  renderNavBar(IS_AUTH_STATUS);
+}
+
+// 以下渲染 attraction.html 頁面
+
 // fetch url
 const url = "/api" + document.location.pathname;
 
 // 選取 attraction-images
 const attraction_images_node = document.querySelector(".attraction-images");
-let attraction_images_width = attraction_images_node.getBoundingClientRect()["width"];
+let attraction_images_width =
+  attraction_images_node.getBoundingClientRect()["width"];
 
 // 選取 images-container
 const image_container_node = document.querySelector(".image-container");
@@ -41,11 +58,9 @@ const attraction_address_content_node =
 const attraction_transport_content_node =
   document.querySelector(".transport-content");
 
-// 選取 reservation fee content
-const reservation_fee_content_node = document.querySelector(".fee-content");
-
 // image index
 let image_index = 0;
+
 // image index max
 let image_index_max = 0;
 
@@ -88,7 +103,7 @@ function renderAttraction(attraction) {
     image_node.className = "profile-image";
     // 加入 images-container
     image_container_node.appendChild(image_node);
-    
+
     // 設定 background image
     img_url = attraction["images"][i];
     image_node.style.backgroundImage = `url(${img_url})`;
@@ -112,11 +127,12 @@ function renderAttraction(attraction) {
   }
   // set image index max
   image_index_max = attraction["images"].length - 1;
-  
+
   // set image width
   const image_nodes = document.querySelectorAll(".profile-image");
   image_nodes.forEach((image_node) => {
-    attraction_images_width = attraction_images_node.getBoundingClientRect()["width"];
+    attraction_images_width =
+      attraction_images_node.getBoundingClientRect()["width"];
     image_node.style.width = `${attraction_images_width}px`;
   });
 }
@@ -125,7 +141,8 @@ function renderAttraction(attraction) {
 function moveLeft() {
   left_arrow.removeEventListener("click", moveLeft);
   // 更新 image container width
-  let image_container_width = image_container_node.getBoundingClientRect()["width"];
+  let image_container_width =
+    image_container_node.getBoundingClientRect()["width"];
   // 更新 image list width
   let image_list_width = image_list_node.getBoundingClientRect()["width"];
   //確認當前 image index
@@ -212,11 +229,6 @@ function setImageDot(preIndex, nextIndex) {
   image_index = Number(nextIndex);
 }
 
-// set price
-function setPrice() {
-  reservation_fee_content_node.textContent = `新台幣${this.value}元`;
-}
-
 // GET
 async function fetchData(url) {
   return await fetch(url).then((response) => {
@@ -239,7 +251,8 @@ window.addEventListener("resize", () => {
   const image_nodes = document.querySelectorAll(".profile-image");
   // 更新所有 image width
   image_nodes.forEach((image_node) => {
-    attraction_images_width = attraction_images_node.getBoundingClientRect()["width"];
+    attraction_images_width =
+      attraction_images_node.getBoundingClientRect()["width"];
     image_node.style.width = `${attraction_images_width}px`;
   });
   // 確認目前 index

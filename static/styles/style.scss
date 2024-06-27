@@ -43,7 +43,7 @@ body {
               padding: 10px;
               cursor: pointer;
             }
-            & #signout-button{
+            & #signout-button {
               display: none;
             }
           }
@@ -243,6 +243,11 @@ body {
     display: flex;
     justify-content: center;
     flex-grow: 1;
+    //
+    //
+    // index.html
+    //
+    //
     section.main {
       //   border: solid green 3px;
       width: 1200px;
@@ -412,7 +417,7 @@ body {
     section.attraction-page {
       // border: solid green 3px;
       width: 1200px;
-      div.top {
+      div.attraction-top {
         // border: solid orange 3px;
         height: 100px;
       }
@@ -601,6 +606,7 @@ body {
               div.reservation-button {
                 padding: 10px 0px;
                 display: flex;
+                align-items: center;
                 div.booking-button {
                   background-color: #448899;
                   color: white;
@@ -609,11 +615,15 @@ body {
                   border-radius: 5px;
                   cursor: pointer;
                 }
+                div.booking-result {
+                  padding: 0px 20px;
+                  font-weight: bold;
+                }
               }
             }
           }
         }
-        hr.seperator {
+        hr.separator {
           border: 1px solid #e8e8e8;
           margin: 30px 0px;
         }
@@ -636,6 +646,164 @@ body {
         }
       }
     }
+    //
+    //
+    // booking.html
+    //
+    //
+    section.booking-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      div.booking-content {
+        width: 1000px;
+        div.booking-top {
+          height: 100px;
+        }
+        div.bookings {
+          div.booking-title {
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 10px;
+          }
+          div.booking {
+            display: none;
+            padding: 10px;
+            position: relative;
+            flex-wrap: wrap;
+            div.booking-image {
+              width: 266px;
+              background-position: center;
+              background-repeat: no-repeat;
+              background-size: cover;
+            }
+            div.booking-info {
+              // width: 700px;
+              margin-left: 30px;
+              div.flex {
+                display: flex;
+                align-items: center;
+                margin: 10px 0px;
+              }
+              div.title {
+                font-weight: bold;
+                margin-right: 5px;
+              }
+              div.booking-info-title {
+                font-weight: bold;
+                color: #448899;
+                margin-bottom: 10px;
+              }
+            }
+            div.booking-delete {
+              position: absolute;
+              right: 0%;
+              top: 0%;
+              img {
+                width: 30px;
+                height: 30px;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+      }
+      hr.separator {
+        border: 1px solid #e8e8e8;
+        margin: 30px 0px;
+        width: 1200px;
+        display: none;
+      }
+      div.contact-info {
+        display: none;
+        width: 1000px;
+        padding: 0px 10px;
+        div.flex {
+          display: flex;
+          align-items: center;
+          margin: 10px 0px;
+        }
+        input {
+          position: relative;
+          border: 1px solid #e8e8e8;
+          border-radius: 5px;
+          outline: none;
+          font-size: 16px;
+          line-height: 16px;
+          height: 38px;
+          padding-left: 10px;
+          &::placeholder {
+            font-size: 16px;
+          }
+          &:-webkit-autofill {
+            -webkit-background-clip: text;
+          }
+        }
+        div.contact-info-title {
+          font-size: 19px;
+          font-weight: bold;
+          margin-bottom: 10px;
+        }
+        div.contact-notice {
+          font-weight: bold;
+        }
+      }
+      div.card-info {
+        width: 1000px;
+        padding: 0px 10px;
+        display: none;
+        div.flex {
+          display: flex;
+          align-items: center;
+          margin: 10px 0px;
+        }
+        input {
+          position: relative;
+          border: 1px solid #e8e8e8;
+          border-radius: 5px;
+          outline: none;
+          font-size: 16px;
+          line-height: 16px;
+          height: 38px;
+          padding-left: 10px;
+          &::placeholder {
+            font-size: 16px;
+          }
+          &:-webkit-autofill {
+            -webkit-background-clip: text;
+          }
+        }
+        div.card-info-title {
+          font-size: 19px;
+          font-weight: bold;
+          margin-bottom: 10px;
+        }
+      }
+      div.confirm-info {
+        width: 1000px;
+        position: relative;
+        display: none;
+        div.flex {
+          display: flex;
+          align-items: center;
+          justify-content: right;
+          margin: 20px 0px;
+        }
+        div.confirm-fee {
+          font-weight: bold;
+        }
+        div.confirm-area {
+          div.confirm-area-button {
+            background-color: #448899;
+            color: white;
+            font-size: 19px;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
   }
   footer {
     min-height: 104px;
@@ -650,7 +818,11 @@ body {
     }
   }
 }
-
+//
+//
+// index.html
+//
+//
 @media (min-width: 601px) and (max-width: 1200px) {
   body {
     header {
@@ -679,7 +851,6 @@ body {
     }
   }
 }
-
 @media (min-width: 360px) and (max-width: 600px) {
   body {
     header {
@@ -718,7 +889,7 @@ body {
 }
 //
 //
-// attraction html
+// attraction.html
 //
 //
 @media (min-width: 881px) and (max-width: 1200px) {
@@ -832,6 +1003,71 @@ body {
           div.attraction-info {
             padding: 0px 20px;
           }
+        }
+      }
+    }
+  }
+}
+//
+//
+// booking.html
+//
+//
+@media (min-width: 701px) and (max-width: 1000px) {
+  body {
+    main {
+      section.booking-page {
+        width: 100%;
+        div.booking-content {
+          width: 95%;
+        }
+        div.contact-info {
+          width: 95%;
+        }
+        div.card-info {
+          width: 95%;
+        }
+        div.confirm-info {
+          width: 95%;
+        }
+      }
+    }
+  }
+}
+@media (min-width: 360px) and (max-width: 700px) {
+  body {
+    main {
+      section.booking-page {
+        width: 100%;
+        div.booking-content {
+          width: 95%;
+          div.bookings {
+            div.booking {
+              div.booking-image {
+                width: 100%;
+                height: 200px;
+              }
+              div.booking-info {
+                margin-left: 0px;
+                margin-top: 20px;
+                width: 95%;
+              }
+              div.booking-delete {
+                top: auto;
+                bottom: 10px;
+                right: 10px;
+              }
+            }
+          }
+        }
+        div.contact-info {
+          width: 95%;
+        }
+        div.card-info {
+          width: 95%;
+        }
+        div.confirm-info {
+          width: 95%;
         }
       }
     }

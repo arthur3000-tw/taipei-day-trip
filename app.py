@@ -1,11 +1,12 @@
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from fastapi import Depends
+from fastapi import Depends, HTTPException
 from typing import Annotated
 from fastapi import *
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.exceptions import RequestValidationError
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, Field, EmailStr
+from enum import Enum, IntEnum
 from mysql.connector import pooling
 import json
 import jwt
@@ -66,9 +67,9 @@ class DataList(BaseModel):
 
 # 建立 user 資料 model
 class User(BaseModel):
-    id: int
-    name: str
-    email: EmailStr
+    id: int | None 
+    name: str | None
+    email: EmailStr | None
 
 
 # 建立 userInfo 資料 model
@@ -93,9 +94,49 @@ class UserAuth(BaseModel):
 class JWT(BaseModel):
     token: str
 
+
+# 建立 attraction info for booking 資料 model
+class BookingAttraction(BaseModel):
+    id: int
+    name: str
+    address: str
+    image: str
+
+
+# 建立 booking 資料 model
+class Booking(BaseModel):
+    attraction: BookingAttraction
+    date: datetime.date
+    time: str
+    price: int
+
+
+class BookingOutput(BaseModel):
+    data: Booking | None = None
+
+
+class TimeEnum(str, Enum):
+    morning = "morning"
+    afternoon = "afternoon"
+
+
+class PriceEnum(IntEnum):
+    morning = 2000
+    afternoon = 2500
+
+
+class BookingInput(BaseModel):
+    attractionId: int
+    date: datetime.date
+    time: TimeEnum
+    price: PriceEnum
+
+
+class Status(BaseModel):
+    status_code: int
+
+
 # 建立 ok 資料 model
-
-
 class OK(BaseModel):
     ok: bool
 
@@ -365,6 +406,143 @@ def encodePassword(password):
     return hash
 
 
+# 確認登入狀態
+# 輸入
+# UserInfo
+# 輸出
+# boolean
+def isLogin(user_info):
+    if user_info.data == None:
+        return False
+    else:
+        return True
+
+
+# 確認 booking 資料
+# 輸入
+# BookingInput
+# UserInfo
+# 輸出
+# boolean
+def isBookingRegistered(bookingInput:BookingInput,userInfo:UserInfo):
+    userId = userInfo.data.id
+    attractionId = bookingInput.attractionId
+    date = bookingInput.date
+    time = bookingInput.time
+    # 向資料庫取得資料
+    sql="SELECT * FROM booking WHERE user_id = %s AND attraction_id = %s AND date = %s AND time = %s"
+    val=(userId,attractionId,date,time)
+    result=queryDB(sql,val)
+    # 結果數量
+    dataCounts = len(result)
+    # dataCounts 數量為零（查無結果）
+    if dataCounts == 0:
+        return False
+    else:
+        return True
+
+
+# 更新 booking 資料
+# 輸入
+# bookingInput
+# userInfo
+# 輸出 Status 資料
+# status_code = 0 => 更新完成
+# status_code = 1 => 錯誤
+def updateBooking(bookingInput:BookingInput,userInfo:UserInfo):
+    userId = userInfo.data.id
+    attractionId = bookingInput.attractionId
+    date = bookingInput.date
+    time = bookingInput.time
+    log_time = datetime.datetime.now()
+    # 更新資料庫資料
+    sql="UPDATE booking SET log_time = %s \
+         WHERE user_id = %s AND attraction_id = %s AND date = %s AND time = %s"
+    val=(log_time,userId,attractionId,date,time)
+    result=insertDB(sql,val)
+    if result == 1:
+        return Status(status_code=0)
+    else:
+        return Status(status_code=1)
+
+
+# 記錄 booking 狀況
+# 輸入
+# bookingInput
+# userInfo
+# 輸出
+def registerBooking(bookingInput:BookingInput,userInfo:UserInfo):
+    # 確認 booking 狀況
+    # 若已經有重複 booking 狀況
+    if isBookingRegistered(bookingInput,userInfo):
+        result = updateBooking(bookingInput,userInfo)
+        if result.status_code == 0:
+            return JSONResponse(status_code=400, content=Error(error=True, message="重複預訂行程").model_dump())
+        else:
+            return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤").model_dump())
+    # 沒有重複 booking 狀況
+    else:
+        # 取出資料
+        userId = userInfo.data.id
+        attractionId = bookingInput.attractionId
+        date = bookingInput.date
+        time = bookingInput.time
+        price = bookingInput.price
+        # 資料庫指令
+        sql = "INSERT INTO booking (user_id, attraction_id, date, time, price) \
+               VALUES (%s,%s,%s,%s,%s)"
+        val = (userId, attractionId, date, time, price)
+        result = insertDB(sql,val)
+        if result == 1:
+            return OK(ok=True)
+        else:
+            return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤").model_dump())
+
+
+# 取得 booking 資料
+# 輸入
+# userInfo
+# 輸出
+# Booking 資料
+def getBooking(userInfo:UserInfo):
+    # 取出資料
+    userId = userInfo.data.id
+    # 資料庫指令
+    sql = "SELECT * FROM booking WHERE user_id = %s ORDER BY log_time DESC LIMIT 1"
+    val = (userId,)
+    result = queryDB(sql,val)
+    if len(result) == 1:
+        # 取出 booking 資料
+        attractionId = result[0]["attraction_id"]
+        date = result[0]["date"]
+        time = result[0]["time"]
+        price = result[0]["price"]
+        # 取得 attraction 資料
+        attractionInfo = get_attraction_id(attractionId)
+        # 取出 bookingAttraction 資料
+        attractionName = attractionInfo.data.name
+        attractionAddress = attractionInfo.data.address
+        attractionImage = attractionInfo.data.images[0]
+        return BookingOutput(data=Booking(attraction=BookingAttraction(id=attractionId,name=attractionName,address=attractionAddress,image=attractionImage),
+                    date=date,time=time,price=price))
+    else:
+        return JSONResponse(status_code=400, content=Error(error=True, message="沒有符合的資料").model_dump())
+
+
+# 刪除 booking 資料
+def deleteBooking(userInfo:UserInfo):
+    # 取出資料
+    userId = userInfo.data.id
+    # 資料庫指令
+    sql = "DELETE FROM booking WHERE user_id = %s ORDER BY log_time DESC LIMIT 1"
+    val = (userId,)
+    result = insertDB(sql,val)
+    if result == 1:
+        return OK(ok=True)
+    else:
+        return JSONResponse(status_code=400, content=Error(error=True, message="沒有可以刪除的資料").model_dump())
+
+
 ######################################################################################
 ######################################################################################
 # 取得 attractions 資料列表
@@ -398,8 +576,11 @@ async def get_api_mrts(request: Request) -> DataList:
 @app.get(path="/api/user/auth")
 async def get_api_user_auth(request: Request, credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)]) -> UserInfo:
     try:
-        result = validateJWT(credentials.credentials)
-        return result
+        userInfo = validateJWT(credentials.credentials)
+        if isLogin(userInfo):
+            return userInfo
+        else:
+            return JSONResponse(status_code=403, content=userInfo.model_dump())
     except:
         return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤").model_dump())
 
@@ -423,10 +604,60 @@ async def post_api_user(request: Request, signUpInfo: SignUpInfo) -> OK:
         return JSONResponse(status_code=400, content=Error(error=True, message="重複的 email").model_dump())
 
 
+# 建立新的預定行程
+@app.post(path="/api/booking")
+async def post_api_booking(request: Request, credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)], bookingInput:BookingInput) -> OK:
+    try:
+        userInfo = validateJWT(credentials.credentials)
+        if isLogin(userInfo) :
+            result = registerBooking(bookingInput,userInfo)
+            return result
+        else:
+            return JSONResponse(status_code=403, content=Error(error=True, message="尚未登入").model_dump())
+    except:
+        return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤").model_dump())
+
+
+# 取得尚未確認下單的預訂行程
+@app.get(path="/api/booking")
+async def get_api_booking(request: Request, credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)]):
+    try:
+        userInfo = validateJWT(credentials.credentials)
+        if isLogin(userInfo) :
+            result = getBooking(userInfo)
+            return result
+        else:
+            return JSONResponse(status_code=403, content=Error(error=True, message="尚未登入").model_dump())
+    except:
+        return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤").model_dump())
+
+
+# 刪除目前的預定行程
+@app.delete(path='/api/booking')
+async def delete_api_booking(request: Request, credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)]):
+    try:
+        userInfo = validateJWT(credentials.credentials)
+        if isLogin(userInfo):
+            result = deleteBooking(userInfo)
+            return result
+        else:
+            return JSONResponse(status_code=403, content=Error(error=True, message="尚未登入").model_dump())
+    except:
+        return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤").model_dump())
+
+
+
 # Error handling
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
-    return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤").model_dump())
+    return JSONResponse(status_code=400, content=Error(error=True, message="輸入資料型態驗證錯誤").model_dump())
+
+
+# http exception handling
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request: Request, exc: HTTPException):
+    if exc.status_code == status.HTTP_403_FORBIDDEN:
+        return JSONResponse(status_code=403, content=Error(error=True, message="尚未登入").model_dump())
 
 
 ######################################################################################
