@@ -22,14 +22,14 @@ function navBookingButton() {
     location.href = "/booking";
   } else {
     SIGN_IN_LOCATION = "/booking";
-    toggleSignInForm(this);
+    toggleSignInForm();
   }
 }
 
 // 點選 登入/註冊按鈕
 function signInButton() {
   SIGN_IN_LOCATION = location.href;
-  toggleSignInForm(this);
+  toggleSignInForm();
 }
 
 // 登入 nav bar

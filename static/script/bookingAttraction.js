@@ -67,6 +67,7 @@ function bookingAttraction() {
           location.href = "/booking";
         } else if (data["message"] === "尚未登入") {
           showBookingResult(data["message"], "red");
+          SIGN_IN_LOCATION = "/booking";
           toggleSignInForm();
         }
       } else if (data["ok"] === true) {
