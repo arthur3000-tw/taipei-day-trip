@@ -60,7 +60,6 @@ function deleteBooking() {
     })
     .then((data) => {
       if (data["ok"] === true) {
-        deleteBooking()
         location.reload()
       }
     });
