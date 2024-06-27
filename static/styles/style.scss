@@ -242,7 +242,7 @@ body {
     background-color: white;
     display: flex;
     justify-content: center;
-    flex-grow: 1;
+    // flex-grow: 1;
     //
     //
     // index.html
@@ -807,6 +807,7 @@ body {
   }
   footer {
     min-height: 104px;
+    height: 100%;
     background-color: #757575;
     display: flex;
     justify-content: center;

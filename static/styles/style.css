@@ -233,7 +233,6 @@ body main {
   background-color: white;
   display: flex;
   justify-content: center;
-  flex-grow: 1;
 }
 body main section.main {
   width: 1200px;
@@ -752,6 +751,7 @@ body main section.booking-page div.confirm-info div.confirm-area div.confirm-are
 }
 body footer {
   min-height: 104px;
+  height: 100%;
   background-color: #757575;
   display: flex;
   justify-content: center;
