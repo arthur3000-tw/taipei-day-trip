@@ -1,5 +1,6 @@
 //
-let SIGN_IN_LOCATION;
+let SIGN_IN_LOCATION = "";
+let IS_BOOKING_PROCESS = false;
 
 // 渲染 nav bar
 function renderNavBar(isAuthStatus) {
@@ -68,8 +69,14 @@ function renderNullNav() {
   window.onmousedown = function (e) {
     if (e.target === signIn_layer_node) {
       toggleSignInForm();
+      initialGlobalVariable();
     }
   };
+}
+
+function initialGlobalVariable() {
+  SIGN_IN_LOCATION = "";
+  IS_BOOKING_PROCESS = false;
 }
 
 // email 格式驗證
@@ -137,17 +144,12 @@ function toggleSignInForm() {
 
 //註冊流程
 function register() {
-  showFormResponse("驗證中...", "orange");
+  //
   const form_name = document.querySelector("#form-name");
   const form_email = document.querySelector("#form-email");
   const form_password = document.querySelector("#form-password");
-  // 檢查是否為空值
-  if (form_name.value == "" || form_email.value == "" || form_password == "") {
-    showFormResponse("請輸入完整資料", "red");
-    return;
-  }
-  if (!isEmailValid(form_email.value)) {
-    showFormResponse("電子郵件格式錯誤", "red");
+  // 確認資料正確
+  if (!isRegisterFormOK(form_name, form_email, form_password)) {
     return;
   }
   // 後端註冊
@@ -176,19 +178,31 @@ function register() {
     });
 }
 
-// 登入流程
-function signIn() {
+function isRegisterFormOK(form_name, form_email, form_password) {
   showFormResponse("驗證中...", "orange");
-  const form_email = document.querySelector("#form-email");
-  const form_password = document.querySelector("#form-password");
   // 檢查是否為空值
-  if (form_email.value == "" || form_password == "") {
-    showFormResponse("電子郵件或密碼錯誤", "red");
-    return;
+  if (
+    form_name.value == "" ||
+    form_email.value == "" ||
+    form_password.value == ""
+  ) {
+    showFormResponse("請輸入完整資料", "red");
+    return false;
   }
-  // 檢查 email 格式
   if (!isEmailValid(form_email.value)) {
     showFormResponse("電子郵件格式錯誤", "red");
+    return false;
+  }
+  return true;
+}
+
+// 登入流程
+function signIn() {
+  //
+  const form_email = document.querySelector("#form-email");
+  const form_password = document.querySelector("#form-password");
+  //
+  if (!isSignInFormOK(form_email, form_password)) {
     return;
   }
   // 後端確認密碼
@@ -204,15 +218,35 @@ function signIn() {
       // 登入成功取得 JWT，存放於 local storage
       if (data["token"]) {
         localStorage.setItem("TOKEN", data["token"]);
+        TOKEN = localStorage.getItem("TOKEN");
         showFormResponse("正確", "green");
         // 導入頁面
-        location.href = SIGN_IN_LOCATION;
+        if (SIGN_IN_LOCATION === "/booking" && IS_BOOKING_PROCESS === true) {
+          bookingAttraction();
+        } else {
+          location.href = SIGN_IN_LOCATION;
+        }
       }
       // 登入失敗，顯示錯誤
       else {
         showFormResponse("電子郵件或密碼錯誤", "red");
       }
     });
+}
+
+function isSignInFormOK(form_email, form_password) {
+  showFormResponse("驗證中...", "orange");
+  // 檢查是否為空值
+  if (form_email.value == "" || form_password.value == "") {
+    showFormResponse("電子郵件或密碼錯誤", "red");
+    return false;
+  }
+  // 檢查 email 格式
+  if (!isEmailValid(form_email.value)) {
+    showFormResponse("電子郵件格式錯誤", "red");
+    return false;
+  }
+  return true;
 }
 
 // 登出

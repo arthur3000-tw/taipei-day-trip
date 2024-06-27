@@ -1,6 +1,3 @@
-// 取得 local storage 至中的 token
-const token = localStorage.getItem("TOKEN");
-
 // 取得 attraction id
 const attraction_id = document.location.pathname.split("/")[2];
 
@@ -23,16 +20,8 @@ booking_button.addEventListener("click", bookingAttraction);
 
 // 點選 booking 按鈕
 function bookingAttraction() {
-  // 確認日期是否填寫
-  if (input_date.value == "") {
-    input_date.setCustomValidity("請選擇日期");
-    input_date.reportValidity();
-    return;
-  }
-  // 確認時間是否選取
-  if (!selection_morning.checked && !selection_afternoon.checked) {
-    selection_morning.setCustomValidity("請選擇一個時段");
-    selection_morning.reportValidity();
+  // 確認表格
+  if (!isBookingFormOK()) {
     return;
   }
   // 取得被選取的 radio
@@ -46,7 +35,7 @@ function bookingAttraction() {
   const method = "POST";
   const headers = {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${TOKEN}`,
   };
   const body = {
     attractionId: attraction_id,
@@ -68,6 +57,7 @@ function bookingAttraction() {
         } else if (data["message"] === "尚未登入") {
           showBookingResult(data["message"], "red");
           SIGN_IN_LOCATION = "/booking";
+          IS_BOOKING_PROCESS = true;
           toggleSignInForm();
         }
       } else if (data["ok"] === true) {
@@ -76,6 +66,23 @@ function bookingAttraction() {
         location.href = "/booking";
       }
     });
+}
+
+//
+function isBookingFormOK() {
+  // 確認日期是否填寫
+  if (input_date.value == "") {
+    input_date.setCustomValidity("請選擇日期");
+    input_date.reportValidity();
+    return false;
+  }
+  // 確認時間是否選取
+  if (!selection_morning.checked && !selection_afternoon.checked) {
+    selection_morning.setCustomValidity("請選擇一個時段");
+    selection_morning.reportValidity();
+    return false;
+  }
+  return true;
 }
 
 // 確認 Date Time
