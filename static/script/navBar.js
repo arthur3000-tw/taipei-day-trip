@@ -52,7 +52,7 @@ function renderNullNav() {
   const signIn_button = document.querySelector("#signin-button");
   signIn_button.addEventListener("click", signInButton);
   const signIn_cancel_button = document.querySelector(".cancel");
-  signIn_cancel_button.addEventListener("click", toggleSignInForm);
+  signIn_cancel_button.addEventListener("click", signInCancelButton);
   const form_hint = document.querySelector(".form-hint");
   form_hint.addEventListener("click", toggleFormContent);
   // 顯示 登入/註冊 按鈕
@@ -68,10 +68,16 @@ function renderNullNav() {
   // 點選登入/註冊頁面之外區域
   window.onmousedown = function (e) {
     if (e.target === signIn_layer_node) {
-      toggleSignInForm();
       initialGlobalVariable();
+      toggleSignInForm();
     }
   };
+}
+
+function signInCancelButton() {
+  initialGlobalVariable();
+  clearForm();
+  toggleSignInForm();
 }
 
 function initialGlobalVariable() {
