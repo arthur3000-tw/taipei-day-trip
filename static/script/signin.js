@@ -99,6 +99,11 @@ function register() {
   const form_name = document.querySelector("#form-name");
   const form_email = document.querySelector("#form-email");
   const form_password = document.querySelector("#form-password");
+  // 檢查是否為空值
+  if (form_name.value == "" || form_email.value == "" || form_password == "") {
+    showFormResponse("請輸入完整資料", "red");
+    return;
+  }
   if (!isEmailValid(form_email.value)) {
     showFormResponse("電子郵件格式錯誤", "red");
     return;
@@ -134,6 +139,11 @@ function signIn() {
   showFormResponse("驗證中...", "orange");
   const form_email = document.querySelector("#form-email");
   const form_password = document.querySelector("#form-password");
+  // 檢查是否為空值
+  if (form_email.value == "" || form_password == "") {
+    showFormResponse("電子郵件或密碼錯誤", "red");
+    return;
+  }
   // 檢查 email 格式
   if (!isEmailValid(form_email.value)) {
     showFormResponse("電子郵件格式錯誤", "red");
@@ -165,6 +175,7 @@ function signIn() {
 
 //登出
 function signOut() {
+  // 清除 TOKEN
   localStorage.removeItem("TOKEN");
   // 重新整理頁面
   location.reload();
