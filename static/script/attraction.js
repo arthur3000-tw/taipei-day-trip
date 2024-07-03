@@ -8,11 +8,11 @@ async function initialize() {
     // 設置登入狀態
     IS_AUTH_STATUS = true;
   }
-  // 根據登入狀態渲染 nav bar
+  // 根據登入狀態呈現 nav bar
   renderNavBar(IS_AUTH_STATUS);
 }
 
-// 以下渲染 attraction.html 頁面
+// 以下呈現 attraction.html 頁面
 
 // fetch url
 const url = "/api" + document.location.pathname;

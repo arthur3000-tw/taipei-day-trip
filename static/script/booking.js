@@ -13,11 +13,11 @@ async function initialize() {
     // 導向至首頁（book.html無法給未登入的人使用）
     location.replace("/");
   }
-  // 根據登入狀態渲染 nav bar（這邊一定是登入的狀態）
+  // 根據登入狀態呈現 nav bar（這邊一定是登入的狀態）
   renderNavBar(IS_AUTH_STATUS);
 }
 
-// 以下渲染 booking.html 頁面
+// 以下呈現 booking.html 頁面
 
 function renderPage() {
   // 取得 booking 資訊
@@ -35,6 +35,7 @@ function renderPage() {
         renderContact();
         renderConfirm(data["data"]);
         renderDelete();
+        renderConfirmButton(data["data"],document.querySelector(".confirm-area-button")) // function in tappay.js file
       } else if (data["error"] === true) {
         renderEmpty();
       }
@@ -65,9 +66,9 @@ function deleteBooking() {
     });
 }
 
-// 渲染沒有 booking 資料畫面
+// 呈現沒有 booking 資料畫面
 function renderEmpty() {
-  // 渲染 booking-title
+  // 呈現 booking-title
   const booking_title = document.querySelector(".booking-title");
   booking_title.textContent = `您好，${USER.name}，待預訂的行程如下：`;
 
@@ -79,7 +80,7 @@ function renderEmpty() {
   booking_info_node.style.margin = "10px 0px";
 }
 
-// 渲染 booking 資料畫面
+// 呈現 booking 資料畫面
 function renderBooking(data) {
   //
   const booking = document.querySelector(".booking");
@@ -99,33 +100,33 @@ function renderBooking(data) {
   const confirm_info = document.querySelector(".confirm-info");
   confirm_info.style.display = "block";
 
-  // 渲染 booking-title
+  // 呈現 booking-title
   const booking_title = document.querySelector(".booking-title");
   booking_title.textContent = `您好，${USER.name}，待預訂的行程如下：`;
-  // 渲染 booking-img
+  // 呈現 booking-img
   const booking_image = document.querySelector(".booking-image");
   booking_image.style.backgroundImage = `url(${data.attraction.image})`;
-  // 渲染 booking-info-title
+  // 呈現 booking-info-title
   const booking_info_title = document.querySelector(".booking-info-title");
   booking_info_title.textContent = `台北一日遊：${data.attraction.name}`;
-  // 渲染 booking-date-content
+  // 呈現 booking-date-content
   const booking_date_content = document.querySelector(".booking-date-content");
   booking_date_content.textContent = `${data.date}`;
-  // 渲染 booking-time-content
+  // 呈現 booking-time-content
   renderInfoTime(data.time);
-  // 渲染 booking-fee-content
+  // 呈現 booking-fee-content
   const booking_fee_content = document.querySelector(".booking-fee-content");
   booking_fee_content.textContent = `新台幣 ${data.price} 元`;
-  // 渲染 booking-address-content
+  // 呈現 booking-address-content
   const booking_address_content = document.querySelector(
     ".booking-address-content"
   );
   booking_address_content.textContent = `${data.attraction.address}`;
-  // 渲染 booking-delete
+  // 呈現 booking-delete
   const booking_delete = document.querySelector(".booking-delete");
 }
 
-// 渲染時間狀態
+// 呈現時間狀態
 function renderInfoTime(data) {
   const booking_time_content = document.querySelector(".booking-time-content");
   if (data === "morning") {
@@ -137,7 +138,7 @@ function renderInfoTime(data) {
   }
 }
 
-// 渲染聯絡資訊
+// 呈現聯絡資訊
 function renderContact() {
   // 選取 contact-name-input
   const contact_name_input = document.querySelector("#contact-name");
@@ -147,7 +148,7 @@ function renderContact() {
   contact_email_input.value = `${USER.email}`;
 }
 
-// 渲染付款資訊
+// 呈現付款資訊
 function renderConfirm(data) {
   // 選取 confirm-fee-content
   const confirm_fee_content = document.querySelector(".confirm-fee-content");
