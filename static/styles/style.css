@@ -703,7 +703,7 @@ body main section.booking-page div.card-info div.flex {
   align-items: center;
   margin: 10px 0px;
 }
-body main section.booking-page div.card-info input {
+body main section.booking-page div.card-info div.tpfield {
   position: relative;
   border: 1px solid #e8e8e8;
   border-radius: 5px;
@@ -712,14 +712,15 @@ body main section.booking-page div.card-info input {
   line-height: 16px;
   height: 38px;
   padding-left: 10px;
+  width: 178px;
 }
-body main section.booking-page div.card-info input::-moz-placeholder {
+body main section.booking-page div.card-info div.tpfield::-moz-placeholder {
   font-size: 16px;
 }
-body main section.booking-page div.card-info input::placeholder {
+body main section.booking-page div.card-info div.tpfield::placeholder {
   font-size: 16px;
 }
-body main section.booking-page div.card-info input:-webkit-autofill {
+body main section.booking-page div.card-info div.tpfield:-webkit-autofill {
   -webkit-background-clip: text;
 }
 body main section.booking-page div.card-info div.card-info-title {
@@ -740,6 +741,9 @@ body main section.booking-page div.confirm-info div.flex {
 }
 body main section.booking-page div.confirm-info div.confirm-fee {
   font-weight: bold;
+}
+body main section.booking-page div.confirm-info div.confirm-area div.confirm-area-hint {
+  padding: 5px 15px;
 }
 body main section.booking-page div.confirm-info div.confirm-area div.confirm-area-button {
   background-color: #448899;

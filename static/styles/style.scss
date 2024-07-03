@@ -757,7 +757,7 @@ body {
           align-items: center;
           margin: 10px 0px;
         }
-        input {
+        div.tpfield {
           position: relative;
           border: 1px solid #e8e8e8;
           border-radius: 5px;
@@ -766,6 +766,7 @@ body {
           line-height: 16px;
           height: 38px;
           padding-left: 10px;
+          width: 178px;
           &::placeholder {
             font-size: 16px;
           }
@@ -793,6 +794,9 @@ body {
           font-weight: bold;
         }
         div.confirm-area {
+          div.confirm-area-hint{
+            padding: 5px 15px;
+          }
           div.confirm-area-button {
             background-color: #448899;
             color: white;

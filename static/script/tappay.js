@@ -80,6 +80,7 @@ async function getPrime() {
   const confirm_area_hint = document.querySelector(".confirm-area-hint");
   // 取得 TapPay Fields 的 status
   const tappayStatus = TPDirect.card.getTappayFieldsStatus();
+  console.log(tappayStatus.canGetPrime);
   // 確認是否可以 getPrime
   if (tappayStatus.canGetPrime === false) {
     showConfirmResponse(confirm_area_hint, "信用卡資料錯誤", "red");
@@ -120,20 +121,24 @@ async function sendPayment(data) {
   const contact_phone = document.querySelector("#contact-phone");
   const confirm_area_hint = document.querySelector(".confirm-area-hint");
   // 確認聯絡資訊
-  if(contact_name.value === "" || contact_email.value === "" || contact_phone.value === ""){
-    showConfirmResponse(confirm_area_hint,"請輸入完整聯絡資訊","red")
+  if (
+    contact_name.value === "" ||
+    contact_email.value === "" ||
+    contact_phone.value === ""
+  ) {
+    showConfirmResponse(confirm_area_hint, "請輸入完整聯絡資訊", "red");
     return;
   }
 
   // 先由前端向 TapPay 取得 prime
-  showConfirmResponse(confirm_area_hint,"取得授權中...","orange")
+  showConfirmResponse(confirm_area_hint, "取得授權中...", "orange");
   let prime = await getPrime();
   // 資料錯誤
   if (prime === undefined) {
-    showConfirmResponse(confirm_area_hint,"授權失敗（尚未付款）","red")
+    showConfirmResponse(confirm_area_hint, "授權失敗（尚未付款）", "red");
     return;
   }
-  showConfirmResponse(confirm_area_hint,"完成授權，進行預定行程...","orange")
+  showConfirmResponse(confirm_area_hint, "完成授權，進行預定行程...", "orange");
   //
   let price = data.price;
   let trip = new Trip({
@@ -158,14 +163,14 @@ async function sendPayment(data) {
     prime: prime,
     order: order,
   };
-    // fetch
-    let response = await fetch(url, {
-      method: method,
-      headers: headers,
-      body: JSON.stringify(body),
-    });
-    let response_body = await response.json();
-    console.log(response_body);
+  // fetch
+  let response = await fetch(url, {
+    method: method,
+    headers: headers,
+    body: JSON.stringify(body),
+  });
+  let response_body = await response.json();
+  console.log(response_body);
 }
 
 // 顯示表格回應訊息

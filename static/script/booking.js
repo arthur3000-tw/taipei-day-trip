@@ -35,6 +35,9 @@ function renderPage() {
         renderContact();
         renderConfirm(data["data"]);
         renderDelete();
+        renderConfirmButton(data["data"],
+          document.querySelector(".confirm-area-button")
+        );
       } else if (data["error"] === true) {
         renderEmpty();
       }
@@ -60,7 +63,7 @@ function deleteBooking() {
     })
     .then((data) => {
       if (data["ok"] === true) {
-        location.reload()
+        location.reload();
       }
     });
 }

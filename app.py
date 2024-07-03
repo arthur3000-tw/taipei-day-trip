@@ -132,6 +132,30 @@ class BookingInput(BaseModel):
     price: PriceEnum
 
 
+class Trip(BaseModel):
+    attraction: BookingAttraction
+    date: datetime.date
+    time: TimeEnum
+
+
+class Contact(BaseModel):
+    name: str
+    email: EmailStr
+    phone: str
+
+
+class Order(BaseModel):
+    price: PriceEnum
+    trip: Trip
+    contact: Contact
+
+
+class OrderInput(BaseModel):
+    prime: str
+    order: Order
+
+
+
 class Status(BaseModel):
     status_code: int
 
@@ -543,6 +567,11 @@ def deleteBooking(userInfo:UserInfo):
         return JSONResponse(status_code=400, content=Error(error=True, message="沒有可以刪除的資料").model_dump())
 
 
+def registerOrder(orderInput:OrderInput):
+    pass
+
+
+
 ######################################################################################
 ######################################################################################
 # 取得 attractions 資料列表
@@ -633,7 +662,7 @@ async def get_api_booking(request: Request, credentials: Annotated[HTTPAuthoriza
 
 
 # 刪除目前的預定行程
-@app.delete(path='/api/booking')
+@app.delete(path="/api/booking")
 async def delete_api_booking(request: Request, credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)]):
     try:
         userInfo = validateJWT(credentials.credentials)
@@ -645,6 +674,18 @@ async def delete_api_booking(request: Request, credentials: Annotated[HTTPAuthor
     except:
         return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤").model_dump())
 
+
+@app.post(path="/api/orders")
+async def post_api_orders(request:Request,credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)], orderInput:OrderInput):
+    try:
+        userInfo = validateJWT(credentials.credentials)
+        if isLogin(userInfo):
+            result = registerOrder(orderInput)
+            return result
+        else:
+            return JSONResponse(status_code=403, content=Error(error=True, message="尚未登入").model_dump())
+    except:
+        return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤").model_dump())
 
 
 # Error handling
