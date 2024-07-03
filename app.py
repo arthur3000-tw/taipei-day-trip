@@ -1,5 +1,5 @@
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from fastapi import Depends, HTTPException, Body
+from fastapi import Depends, HTTPException
 from typing import Annotated
 from fastapi import *
 from fastapi.responses import FileResponse, JSONResponse
@@ -67,7 +67,7 @@ class DataList(BaseModel):
 
 # 建立 user 資料 model
 class User(BaseModel):
-    id: int | None
+    id: int | None 
     name: str | None
     email: EmailStr | None
 
@@ -130,29 +130,6 @@ class BookingInput(BaseModel):
     date: datetime.date
     time: TimeEnum
     price: PriceEnum
-
-
-class Trip(BaseModel):
-    attraction: BookingAttraction
-    date: datetime.date
-    time: TimeEnum
-
-
-class Contact(BaseModel):
-    name: str
-    email: EmailStr
-    phone: str
-
-
-class Order(BaseModel):
-    price: PriceEnum
-    trip: Trip
-    contact: Contact
-
-
-class OrderInput(BaseModel):
-    prime: str
-    order: Order
 
 
 class Status(BaseModel):
@@ -447,15 +424,15 @@ def isLogin(user_info):
 # UserInfo
 # 輸出
 # boolean
-def isBookingRegistered(bookingInput: BookingInput, userInfo: UserInfo):
+def isBookingRegistered(bookingInput:BookingInput,userInfo:UserInfo):
     userId = userInfo.data.id
     attractionId = bookingInput.attractionId
     date = bookingInput.date
     time = bookingInput.time
     # 向資料庫取得資料
-    sql = "SELECT * FROM booking WHERE user_id = %s AND attraction_id = %s AND date = %s AND time = %s"
-    val = (userId, attractionId, date, time)
-    result = queryDB(sql, val)
+    sql="SELECT * FROM booking WHERE user_id = %s AND attraction_id = %s AND date = %s AND time = %s"
+    val=(userId,attractionId,date,time)
+    result=queryDB(sql,val)
     # 結果數量
     dataCounts = len(result)
     # dataCounts 數量為零（查無結果）
@@ -472,17 +449,17 @@ def isBookingRegistered(bookingInput: BookingInput, userInfo: UserInfo):
 # 輸出 Status 資料
 # status_code = 0 => 更新完成
 # status_code = 1 => 錯誤
-def updateBooking(bookingInput: BookingInput, userInfo: UserInfo):
+def updateBooking(bookingInput:BookingInput,userInfo:UserInfo):
     userId = userInfo.data.id
     attractionId = bookingInput.attractionId
     date = bookingInput.date
     time = bookingInput.time
     log_time = datetime.datetime.now()
     # 更新資料庫資料
-    sql = "UPDATE booking SET log_time = %s \
+    sql="UPDATE booking SET log_time = %s \
          WHERE user_id = %s AND attraction_id = %s AND date = %s AND time = %s"
-    val = (log_time, userId, attractionId, date, time)
-    result = insertDB(sql, val)
+    val=(log_time,userId,attractionId,date,time)
+    result=insertDB(sql,val)
     if result == 1:
         return Status(status_code=0)
     else:
@@ -494,11 +471,11 @@ def updateBooking(bookingInput: BookingInput, userInfo: UserInfo):
 # bookingInput
 # userInfo
 # 輸出
-def registerBooking(bookingInput: BookingInput, userInfo: UserInfo):
+def registerBooking(bookingInput:BookingInput,userInfo:UserInfo):
     # 確認 booking 狀況
     # 若已經有重複 booking 狀況
-    if isBookingRegistered(bookingInput, userInfo):
-        result = updateBooking(bookingInput, userInfo)
+    if isBookingRegistered(bookingInput,userInfo):
+        result = updateBooking(bookingInput,userInfo)
         if result.status_code == 0:
             return JSONResponse(status_code=400, content=Error(error=True, message="重複預訂行程").model_dump())
         else:
@@ -515,7 +492,7 @@ def registerBooking(bookingInput: BookingInput, userInfo: UserInfo):
         sql = "INSERT INTO booking (user_id, attraction_id, date, time, price) \
                VALUES (%s,%s,%s,%s,%s)"
         val = (userId, attractionId, date, time, price)
-        result = insertDB(sql, val)
+        result = insertDB(sql,val)
         if result == 1:
             return OK(ok=True)
         else:
@@ -527,13 +504,13 @@ def registerBooking(bookingInput: BookingInput, userInfo: UserInfo):
 # userInfo
 # 輸出
 # Booking 資料
-def getBooking(userInfo: UserInfo):
+def getBooking(userInfo:UserInfo):
     # 取出資料
     userId = userInfo.data.id
     # 資料庫指令
     sql = "SELECT * FROM booking WHERE user_id = %s ORDER BY log_time DESC LIMIT 1"
     val = (userId,)
-    result = queryDB(sql, val)
+    result = queryDB(sql,val)
     if len(result) == 1:
         # 取出 booking 資料
         attractionId = result[0]["attraction_id"]
@@ -546,29 +523,24 @@ def getBooking(userInfo: UserInfo):
         attractionName = attractionInfo.data.name
         attractionAddress = attractionInfo.data.address
         attractionImage = attractionInfo.data.images[0]
-        return BookingOutput(data=Booking(attraction=BookingAttraction(id=attractionId, name=attractionName, address=attractionAddress, image=attractionImage),
-                                          date=date, time=time, price=price))
+        return BookingOutput(data=Booking(attraction=BookingAttraction(id=attractionId,name=attractionName,address=attractionAddress,image=attractionImage),
+                    date=date,time=time,price=price))
     else:
         return JSONResponse(status_code=400, content=Error(error=True, message="沒有符合的資料").model_dump())
 
 
 # 刪除 booking 資料
-def deleteBooking(userInfo: UserInfo):
+def deleteBooking(userInfo:UserInfo):
     # 取出資料
     userId = userInfo.data.id
     # 資料庫指令
     sql = "DELETE FROM booking WHERE user_id = %s"
     val = (userId,)
-    result = insertDB(sql, val)
+    result = insertDB(sql,val)
     if result != 0:
         return OK(ok=True)
     else:
         return JSONResponse(status_code=400, content=Error(error=True, message="沒有可以刪除的資料").model_dump())
-
-
-def registerOrder(orderInput:OrderInput):
-    return
-
 
 
 ######################################################################################
@@ -634,11 +606,11 @@ async def post_api_user(request: Request, signUpInfo: SignUpInfo) -> OK:
 
 # 建立新的預定行程
 @app.post(path="/api/booking")
-async def post_api_booking(request: Request, credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)], bookingInput: BookingInput) -> OK:
+async def post_api_booking(request: Request, credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)], bookingInput:BookingInput) -> OK:
     try:
         userInfo = validateJWT(credentials.credentials)
-        if isLogin(userInfo):
-            result = registerBooking(bookingInput, userInfo)
+        if isLogin(userInfo) :
+            result = registerBooking(bookingInput,userInfo)
             return result
         else:
             return JSONResponse(status_code=403, content=Error(error=True, message="尚未登入").model_dump())
@@ -651,7 +623,7 @@ async def post_api_booking(request: Request, credentials: Annotated[HTTPAuthoriz
 async def get_api_booking(request: Request, credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)]):
     try:
         userInfo = validateJWT(credentials.credentials)
-        if isLogin(userInfo):
+        if isLogin(userInfo) :
             result = getBooking(userInfo)
             return result
         else:
@@ -661,7 +633,7 @@ async def get_api_booking(request: Request, credentials: Annotated[HTTPAuthoriza
 
 
 # 刪除目前的預定行程
-@app.delete(path="/api/booking")
+@app.delete(path='/api/booking')
 async def delete_api_booking(request: Request, credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)]):
     try:
         userInfo = validateJWT(credentials.credentials)
@@ -673,19 +645,6 @@ async def delete_api_booking(request: Request, credentials: Annotated[HTTPAuthor
     except:
         return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤").model_dump())
 
-
-# 建立新的訂單，並完成付款程序
-@app.post(path="/api/orders")
-async def post_api_orders(request:Request,credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)], orderInput:OrderInput):
-    try:
-        userInfo = validateJWT(credentials.credentials)
-        if isLogin(userInfo):
-            result = registerOrder(orderInput)
-            return result
-        else:
-            return JSONResponse(status_code=403, content=Error(error=True, message="尚未登入").model_dump())
-    except:
-        return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤").model_dump())
 
 
 # Error handling

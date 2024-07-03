@@ -8,11 +8,11 @@ async function initialize() {
     // 設置登入狀態
     IS_AUTH_STATUS = true;
   }
-  // 根據登入狀態呈現 nav bar
+  // 根據登入狀態渲染 nav bar
   renderNavBar(IS_AUTH_STATUS);
 }
 
-// 以下呈現 index.html 頁面
+// 以下渲染 index.html 頁面
 
 // 選取 mrt-text-container
 const mrt_container_node = document.querySelector(".mrt-text-container");
