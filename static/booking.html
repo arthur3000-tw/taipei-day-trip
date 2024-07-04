@@ -7,8 +7,11 @@
     <link rel="stylesheet" href="../static/styles/style.css" />
     <script src="../static/script/getToken.js" defer></script>
     <script src="../static/script/authStatus.js" defer></script>
+    <script src="../static/script/module.js" defer></script>
     <script src="../static/script/authorizaion.js" defer></script>
     <script src="../static/script/navBar.js" defer></script>
+    <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.18.0"></script>
+    <script src="../static/script/tappay.js" defer></script>
     <script src="../static/script/booking.js" defer></script>
   </head>
   <body>
@@ -89,15 +92,15 @@
           <div class="card-info-title">信用卡付款資訊</div>
           <div class="card-number flex">
             <div class="card-number-title">卡片號碼：</div>
-            <div class="card-number-input"><input type="text" id="card-number" placeholder="**** **** **** ****"></div>
+            <div class="card-number-input"><div class="tpfield" id="card-number"></div></div>
           </div>
           <div class="card-expire flex">
             <div class="card-expire-title">過期時間：</div>
-            <div class="card-expire-input"><input type="text" id="card-expire" placeholder="MM/YY"></div>
+            <div class="card-expire-input"><div class="tpfield" id="card-expire"></div></div>
           </div>
           <div class="card-credential flex">
             <div class="card-credential-title">驗證密碼：</div>
-            <div class="card-credential-input"><input type="text" id="card-credential" placeholder="CVV"></div>
+            <div class="card-credential-input"><div class="tpfield" id="card-credential"></div></div>
           </div>
         </div>
         <hr class="separator" />
@@ -107,6 +110,7 @@
             <div class="confirm-fee-content"></div>
           </div>
           <div class="confirm-area flex">
+            <div class="confirm-area-hint"></div>
             <div class="confirm-area-button">確認訂購並付款</div>
           </div>
         </div>
