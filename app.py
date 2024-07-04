@@ -841,8 +841,7 @@ async def post_api_orders(request: Request, credentials: Annotated[HTTPAuthoriza
             return result
         else:
             return JSONResponse(status_code=403, content=Error(error=True, message="尚未登入").model_dump())
-    except Exception as e:
-        print(e)
+    except:
         return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤").model_dump())
 
 
@@ -855,8 +854,7 @@ async def get_api_order(request: Request, credentials: Annotated[HTTPAuthorizati
             return result
         else:
             return JSONResponse(status_code=403, content=Error(error=True, message="尚未登入").model_dump())
-    except Exception as e:
-        print(e)
+    except:
         return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤").model_dump())
 
 
