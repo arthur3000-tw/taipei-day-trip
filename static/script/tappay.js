@@ -80,7 +80,6 @@ async function getPrime() {
   const confirm_area_hint = document.querySelector(".confirm-area-hint");
   // 取得 TapPay Fields 的 status
   const tappayStatus = TPDirect.card.getTappayFieldsStatus();
-  console.log(tappayStatus.canGetPrime);
   // 確認是否可以 getPrime
   if (tappayStatus.canGetPrime === false) {
     showConfirmResponse(confirm_area_hint, "信用卡資料錯誤", "red");
@@ -94,7 +93,7 @@ async function getPrime() {
     return new Promise((resolve) => {
       TPDirect.card.getPrime((result) => {
         if (result.status !== 0) {
-          showConfirmResponse(confirm_area_hint, "信用卡取得資料錯誤", "red");
+          showConfirmResponse(confirm_area_hint, "信用卡取得授權錯誤", "red");
           //   alert("get prime error " + result.msg);
           return;
         }
@@ -129,13 +128,17 @@ async function sendPayment(data) {
     showConfirmResponse(confirm_area_hint, "請輸入完整聯絡資訊", "red");
     return;
   }
+  if (!isPhoneValid(contact_phone.value)) {
+    showConfirmResponse(confirm_area_hint, "請輸入正確手機號碼", "red");
+    return;
+  }
 
   // 先由前端向 TapPay 取得 prime
   showConfirmResponse(confirm_area_hint, "取得授權中...", "orange");
   let prime = await getPrime();
   // 資料錯誤
   if (prime === undefined) {
-    showConfirmResponse(confirm_area_hint, "授權失敗（尚未付款）", "red");
+    showConfirmResponse(confirm_area_hint, "信用卡授權錯誤（尚未付款）", "red");
     return;
   }
   showConfirmResponse(confirm_area_hint, "完成授權，進行預定行程...", "orange");
@@ -170,7 +173,10 @@ async function sendPayment(data) {
     body: JSON.stringify(body),
   });
   let response_body = await response.json();
-  console.log(response_body);
+  showConfirmResponse(confirm_area_hint, "預定完成", "green");
+  if (response_body.data !== null) {
+    location.href = `/thankyou?number=${response_body.data.number}`;
+  }
 }
 
 // 顯示表格回應訊息
@@ -182,4 +188,11 @@ function showConfirmResponse(element, message, color) {
   setTimeout(() => {
     element.style.display = "none";
   }, 1500);
+}
+
+// phone 格式驗證
+function isPhoneValid(phone) {
+  //09xx xxx xxx
+  const phone_pattern = /^09[0-9]{8}$/;
+  return phone_pattern.test(phone);
 }

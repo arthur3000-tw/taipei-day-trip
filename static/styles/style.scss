@@ -794,7 +794,7 @@ body {
           font-weight: bold;
         }
         div.confirm-area {
-          div.confirm-area-hint{
+          div.confirm-area-hint {
             padding: 5px 15px;
           }
           div.confirm-area-button {
@@ -804,6 +804,34 @@ body {
             padding: 5px 15px;
             border-radius: 5px;
             cursor: pointer;
+          }
+        }
+      }
+    }
+    //
+    //
+    // thankyou.html
+    //
+    //
+    section.thankyou-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      div.thankyou-content {
+        width: 1000px;
+        div.thankyou-top {
+          height: 100px;
+        }
+        div.orders {
+          div.order-title {
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 10px;
+          }
+          div.order{
+            div.content{
+              
+            }
           }
         }
       }
@@ -1072,6 +1100,23 @@ body {
           width: 95%;
         }
         div.confirm-info {
+          width: 95%;
+        }
+      }
+    }
+  }
+}
+//
+//
+// thankyou.html
+//
+//
+@media (min-width: 360px) and (max-width: 1000px) {
+  body {
+    main {
+      section.thankyou-page {
+        width: 100%;
+        div.thankyou-content {
           width: 95%;
         }
       }
