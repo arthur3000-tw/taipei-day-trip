@@ -1,4 +1,4 @@
-from controller import getAttractions, staticPage,httpExceptionHandler,validationExceptionHandler
+from controller import getAttractions, getAttractionById, staticPage,httpExceptionHandler,validationExceptionHandler
 from model import db
 import urllib.request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -203,28 +203,7 @@ def insertDB(sql, val):
 
 
 
-# 以 attraction id 查詢
-# 輸入
-# id: int        id
-# 輸出
-# Attraction     資料
-def get_attraction_id(id):
-    sql = "SELECT attraction.*, GROUP_CONCAT(DISTINCT mrt.name) AS mrt, GROUP_CONCAT(DISTINCT category.name) AS category \
-           FROM attraction \
-           LEFT JOIN attraction_mrt ON attraction.id = attraction_mrt.attraction_id \
-           LEFT JOIN mrt ON mrt.id = attraction_mrt.mrt_id \
-           LEFT JOIN attraction_category ON attraction.id = attraction_category.attraction_id \
-           LEFT JOIN category ON category.id = attraction_category.category_id \
-           WHERE attraction.id = %s GROUP BY attraction.name"
-    val = (id,)
-    # 資料庫查詢
-    result = queryDB(sql, val)
-    if len(result) == 1:
-        images = json.loads(result[0]["images"])
-        result[0]["images"] = images["images"]
-        return AttractionID(data=Attraction.model_validate(result[0]))
-    else:
-        raise ValueError()
+
 
 
 # 捷運站按照景點數量排序
@@ -614,13 +593,7 @@ app.include_router(getAttractions.router)
 
 
 # 根據 id 取得 attraction 資料
-@app.get(path="/api/attraction/{attractionId}", responses={400: {"model": Error}})
-async def get_api_attraction_id(request: Request, attractionId: int) -> AttractionID:
-    try:
-        result = get_attraction_id(attractionId)
-        return result
-    except ValueError:
-        return JSONResponse(status_code=400, content=Error(error=True, message="未找到此 ID 之景點資料").model_dump())
+app.include_router(getAttractionById.router)
 
 
 # 取得所有捷運站名稱列表，按照週邊景點的數量由大到小排序
