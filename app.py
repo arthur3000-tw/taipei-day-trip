@@ -1,5 +1,5 @@
 from controller import getAttractions, getAttractionById, getMrts, getUserAuth, staticPage,httpExceptionHandler,validationExceptionHandler
-from model import db, myJWT
+from model import DB, MyJWT
 import urllib.request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi import Depends, HTTPException
@@ -27,10 +27,10 @@ app.mount('/static', StaticFiles(directory='static', html=True))
 
 
 # DB 實體化
-myDB = db.db("localhost","taipei_day_trip")
-myDB.initialize()
+MyDB = DB.DB("localhost","taipei_day_trip")
+MyDB.initialize()
 # db instance 存放於 app.state 中
-app.state.db = myDB
+app.state.db = MyDB
 
 
 
