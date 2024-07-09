@@ -1,4 +1,4 @@
-from controller import getAttractions, getAttractionById, staticPage,httpExceptionHandler,validationExceptionHandler
+from controller import getAttractions, getAttractionById, getMrts, staticPage,httpExceptionHandler,validationExceptionHandler
 from model import db
 import urllib.request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -583,10 +583,7 @@ app.include_router(getAttractionById.router)
 
 
 # 取得所有捷運站名稱列表，按照週邊景點的數量由大到小排序
-@app.get(path="/api/mrts")
-async def get_api_mrts(request: Request) -> DataList:
-    result = get_mrts()
-    return result
+app.include_router(getMrts.router)
 
 
 # 取得當前登入的會員資訊
