@@ -1,10 +1,12 @@
 from fastapi import APIRouter, Request, Depends
-from fastapi.security import HTTPAuthorizationCredentials
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi.responses import JSONResponse
 from typing import Annotated
 from model.responseModel import Error
 
-router = APIRouter(dependencies=[Depends(security)])
+router = APIRouter()
+
+security = HTTPBearer()
 
 # 取得當前登入的會員資訊
 @router.get(path="/api/user/auth")
