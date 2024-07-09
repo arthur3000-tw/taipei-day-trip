@@ -1,4 +1,4 @@
-from controller import staticPage,httpExceptionHandler,validationExceptionHandler
+from controller import staticPage,httpExceptionHandler,validationExceptionHandler,getAttraction
 import urllib.request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi import Depends, HTTPException
@@ -716,14 +716,7 @@ def getOrder(userInfo:UserInfo, orderNumber:str):
 
 ######################################################################################
 ######################################################################################
-# 取得 attractions 資料列表
-@app.get(path="/api/attractions")
-async def get_api_attractions(request: Request, page: int = Query(default=0, ge=0), keyword: str = None) -> Attractions:
-    try:
-        result = get_attractions(page, keyword)
-        return result
-    except ValueError:
-        return JSONResponse(status_code=400, content=Error(error=True, message="沒有符合的資料").model_dump())
+app.add_api_route(getAttraction.router)
 
 
 # 根據 id 取得 attraction 資料
