@@ -1,4 +1,4 @@
-from controller import staticPage,httpExceptionHandler,validationExceptionHandler,getAttraction,
+from controller import staticPage,httpExceptionHandler,validationExceptionHandler,getAttraction
 from model import db
 import urllib.request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
