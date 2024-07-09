@@ -18,17 +18,20 @@ import datetime
 import urllib
 import os
 
+# HTTPBearer 實體化
+security = HTTPBearer()
 
-app = FastAPI()
+# app 加入 dependencies
+app = FastAPI(dependencies=Depends[security])
 app.mount('/static', StaticFiles(directory='static', html=True))
 
 
-security = HTTPBearer()
+
 
 # DB 實體化
 myDB = db.db("localhost","taipei_day_trip")
 myDB.initialize()
-# db instance 儲存於 app.state
+# db instance 存放於 app.state 中
 app.state.db = myDB
 
 
