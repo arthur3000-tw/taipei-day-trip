@@ -1,4 +1,4 @@
-from controller import staticPage
+from controller import staticPage,httpExceptionHandler
 import urllib.request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi import Depends, HTTPException
@@ -866,10 +866,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 
 
 # http exception handling
-@app.exception_handler(HTTPException)
-async def http_exception_handler(request: Request, exc: HTTPException):
-    if exc.status_code == status.HTTP_403_FORBIDDEN:
-        return JSONResponse(status_code=403, content=Error(error=True, message="尚未登入").model_dump())
+app.add_exception_handler(httpExceptionHandler.CustomHttpException,httpExceptionHandler.custom_http_exception_handler)
 
 # Static Pages (Never Modify Code in this Block)
 app.include_router(staticPage.router)
