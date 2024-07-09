@@ -1,14 +1,15 @@
 import json
 from model.AttractionModel import Attractions, Attraction
-from model.queryDB import queryDB
+
 
 # 以 keyword 查詢
 # 輸入
+# myDB: object    db物件
 # page: int       頁數
 # keyword: str    關鍵字
 # 輸出
 # Attractions     資料
-def get_attractions(page, keyword=None):
+def get_attractions(myDB, page, keyword=None):
     # 每頁數據量
     pageCounts = 12
     # 查詢數量
@@ -27,7 +28,7 @@ def get_attractions(page, keyword=None):
         # 向資料庫取得資料
         sql += "GROUP BY attraction.id LIMIT %s OFFSET %s"
         val = (queryCounts, offset)
-        result = queryDB(sql, val)
+        result = myDB.query(sql, val)
         # 結果數量
         dataCounts = len(result)
         # dataCounts 數量為零（查無結果）
@@ -57,7 +58,7 @@ def get_attractions(page, keyword=None):
         sql += "WHERE mrt.name = %s OR attraction.name LIKE %s \
                 GROUP BY attraction.id LIMIT %s OFFSET %s"
         val = (keyword, "%"+keyword+"%", queryCounts, offset)
-        result = queryDB(sql, val)
+        result = myDB.query(sql, val)
         # 結果數量
         dataCounts = len(result)
         # dataCounts 數量為零（查無結果）

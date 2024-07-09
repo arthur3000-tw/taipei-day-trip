@@ -1,5 +1,5 @@
 from controller import staticPage,httpExceptionHandler,validationExceptionHandler,getAttraction
-from model.db import createDB
+from model import db
 import urllib.request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi import Depends, HTTPException
@@ -25,7 +25,9 @@ app.mount('/static', StaticFiles(directory='static', html=True))
 
 security = HTTPBearer()
 
-
+myDB = db.db("localhost","taipei_day_trip")
+myDB.initialize()
+app.state.db = myDB
 
 
 
