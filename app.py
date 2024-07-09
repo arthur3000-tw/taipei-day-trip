@@ -1,5 +1,5 @@
 from controller import getAttractions, getAttractionById, getMrts, getUserAuth, staticPage,httpExceptionHandler,validationExceptionHandler
-from model import db
+from model import db, myJWT
 import urllib.request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi import Depends, HTTPException
@@ -250,19 +250,8 @@ JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
 EXPIRED_DAYS = 7
 JWT_ALGORITHM = "HS256"
 
+my_jwt = myJWT.myJWT()
 
-# 製作 JWT
-# 輸入
-# payload: 加密資料
-# days: 有效期限天數
-# 輸出
-# encoded_jwt: JWT
-def generateJWT(payload, days):
-    exp = datetime.datetime.now(
-        tz=datetime.timezone.utc) + datetime.timedelta(days=days)
-    payload["exp"] = exp
-    encoded_jwt = jwt.encode(payload, JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)
-    return encoded_jwt
 
 
 
