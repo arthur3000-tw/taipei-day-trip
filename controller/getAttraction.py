@@ -2,6 +2,7 @@ from fastapi import APIRouter, Request, Query
 from fastapi.responses import JSONResponse
 from model.AttractionModel import Attractions
 from model.responseModel import Error
+from model.getAttractions import get_attractions
 
 router = APIRouter()
 

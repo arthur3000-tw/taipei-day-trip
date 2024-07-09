@@ -1,4 +1,6 @@
+import json
 from model.AttractionModel import Attractions, Attraction
+from model.queryDB import queryDB
 
 # 以 keyword 查詢
 # 輸入
