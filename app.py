@@ -1,5 +1,5 @@
 from controller import staticPage,httpExceptionHandler,validationExceptionHandler,getAttraction
-from model import db
+from model.db import createDB
 import urllib.request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi import Depends, HTTPException
