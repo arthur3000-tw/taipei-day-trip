@@ -1,4 +1,4 @@
-from controller import staticPage,httpExceptionHandler
+from controller import staticPage,httpExceptionHandler,validationExceptionHandler
 import urllib.request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi import Depends, HTTPException
@@ -859,13 +859,10 @@ async def get_api_order(request: Request, credentials: Annotated[HTTPAuthorizati
         return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤").model_dump())
 
 
-# Error handling
-@app.exception_handler(RequestValidationError)
-async def validation_exception_handler(request: Request, exc: RequestValidationError):
-    return JSONResponse(status_code=400, content=Error(error=True, message="輸入資料型態驗證錯誤").model_dump())
+# Validation Exception Handling
+app.add_exception_handler(validationExceptionHandler.CustomValidationException,validationExceptionHandler.custom_validation_exception_handler)
 
-
-# http exception handling
+# Http Exception Handling
 app.add_exception_handler(httpExceptionHandler.CustomHttpException,httpExceptionHandler.custom_http_exception_handler)
 
 # Static Pages (Never Modify Code in this Block)
