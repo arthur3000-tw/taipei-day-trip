@@ -1,4 +1,4 @@
-from controller import staticPage,httpExceptionHandler,validationExceptionHandler,getAttraction
+from controller import getAttractions, staticPage,httpExceptionHandler,validationExceptionHandler
 from model import db
 import urllib.request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -608,7 +608,7 @@ def getOrder(userInfo:UserInfo, orderNumber:str):
 ######################################################################################
 ######################################################################################
 # 取得 attractions 資料列表
-app.include_router(getAttraction.router)
+app.include_router(getAttractions.router)
 
 
 # 根據 id 取得 attraction 資料
