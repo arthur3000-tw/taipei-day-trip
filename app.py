@@ -27,7 +27,7 @@ app.mount('/static', StaticFiles(directory='static', html=True))
 
 
 # DB 實體化
-myDB = DB.DB("localhost","taipei_day_trip")
+myDB = DB.DB(host="localhost",database="taipei_day_trip")
 myDB.initialize()
 # db instance 存放於 app.state 中
 app.state.db = myDB
@@ -250,7 +250,7 @@ JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
 EXPIRED_DAYS = 7
 JWT_ALGORITHM = "HS256"
 
-my_jwt = myJWT.myJWT()
+my_jwt = MyJWT.MyJWT()
 
 
 
