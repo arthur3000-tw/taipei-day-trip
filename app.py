@@ -1,4 +1,4 @@
-from controller import getAttractions, getAttractionById, getMrts, staticPage,httpExceptionHandler,validationExceptionHandler
+from controller import getAttractions, getAttractionById, getMrts, getUserAuth, staticPage,httpExceptionHandler,validationExceptionHandler
 from model import db
 import urllib.request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -18,11 +18,9 @@ import datetime
 import urllib
 import os
 
-# HTTPBearer 實體化
-security = HTTPBearer()
 
 # app 加入 dependencies
-app = FastAPI(dependencies=Depends[security])
+app = FastAPI()
 app.mount('/static', StaticFiles(directory='static', html=True))
 
 
@@ -590,16 +588,7 @@ app.include_router(getMrts.router)
 
 
 # 取得當前登入的會員資訊
-@app.get(path="/api/user/auth")
-async def get_api_user_auth(request: Request, credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)]) -> UserInfo:
-    try:
-        userInfo = validateJWT(credentials.credentials)
-        if isLogin(userInfo):
-            return userInfo
-        else:
-            return JSONResponse(status_code=403, content=userInfo.model_dump())
-    except:
-        return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤").model_dump())
+app.include_router(getUserAuth.router)
 
 
 # 登入會員帳戶
