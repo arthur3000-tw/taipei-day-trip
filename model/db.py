@@ -1,7 +1,7 @@
 from mysql.connector import pooling
 import os
 
-class db:
+class DB:
     def __init__(self, host, database):
         self.host = host
         self.database = database
