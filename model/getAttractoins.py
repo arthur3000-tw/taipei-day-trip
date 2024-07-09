@@ -1,3 +1,5 @@
+from model.AttractionModel import Attractions, Attraction
+
 # 以 keyword 查詢
 # 輸入
 # page: int       頁數
