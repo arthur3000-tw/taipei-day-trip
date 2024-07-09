@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 from typing import Annotated
 from model.responseModel import Error
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(security)])
 
 # 取得當前登入的會員資訊
 @router.get(path="/api/user/auth")
