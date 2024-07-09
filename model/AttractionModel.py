@@ -13,6 +13,12 @@ class Attraction(BaseModel):
     lng: float
     images: list
 
+
+# 建立 attractionId 資料 model
+class AttractionID(BaseModel):
+    data: Attraction
+
+
 # 建立 attractions 資料 model
 class Attractions(BaseModel):
     nextPage: int | None

@@ -1,4 +1,5 @@
-from controller import staticPage,httpExceptionHandler,validationExceptionHandler,getAttraction
+from controller import staticPage,httpExceptionHandler,validationExceptionHandler,getAttraction,
+from model import db
 import urllib.request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi import Depends, HTTPException
@@ -9,7 +10,6 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.exceptions import RequestValidationError
 from pydantic import BaseModel, Field, EmailStr
 from enum import Enum, IntEnum
-
 import json
 import jwt
 import bcrypt
@@ -30,11 +30,6 @@ security = HTTPBearer()
 
 
 
-
-
-# 建立 attractionId 資料 model
-class AttractionID(BaseModel):
-    data: Attraction
 
 
 # 建立 dataList 資料 model
