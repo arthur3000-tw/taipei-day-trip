@@ -9,7 +9,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.exceptions import RequestValidationError
 from pydantic import BaseModel, Field, EmailStr
 from enum import Enum, IntEnum
-from mysql.connector import pooling
+
 import json
 import jwt
 import bcrypt
@@ -26,17 +26,6 @@ app.mount('/static', StaticFiles(directory='static', html=True))
 security = HTTPBearer()
 
 
-# 資料庫訊息
-myDB = {
-    "host": "localhost",
-    "user": os.environ.get("DB_USER"),
-    "password": os.environ.get("DB_PASS"),
-    "database": "taipei_day_trip"
-}
-
-
-# 建立連接池
-cnxPool = pooling.MySQLConnectionPool(pool_name="myPool", pool_size=5, **myDB)
 
 
 
