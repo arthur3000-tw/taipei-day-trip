@@ -2,7 +2,7 @@ import jwt
 import datetime
 from model.UserModel import UserInfo, User
 
-class myJWT:
+class MyJWT:
     def __init__(self, jwt_secret_key, expired_days, jwt_algorithm) -> None:
         # jwt 加密參數
         self.jwt_secret_key = jwt_secret_key
