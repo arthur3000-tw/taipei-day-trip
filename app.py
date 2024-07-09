@@ -36,9 +36,6 @@ app.state.db = myDB
 
 
 
-# 建立 dataList 資料 model
-class DataList(BaseModel):
-    data: list
 
 
 # 建立 user 資料 model
