@@ -716,7 +716,7 @@ def getOrder(userInfo:UserInfo, orderNumber:str):
 
 ######################################################################################
 ######################################################################################
-app.add_api_route(getAttraction.router)
+app.include_router(getAttraction.router)
 
 
 # 根據 id 取得 attraction 資料
