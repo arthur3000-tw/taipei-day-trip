@@ -1,3 +1,4 @@
+from controller import staticPage
 import urllib.request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi import Depends, HTTPException
@@ -871,24 +872,4 @@ async def http_exception_handler(request: Request, exc: HTTPException):
         return JSONResponse(status_code=403, content=Error(error=True, message="尚未登入").model_dump())
 
 
-######################################################################################
-######################################################################################
-# Static Pages (Never Modify Code in this Block)
-@app.get("/", include_in_schema=False)
-async def index(request: Request):
-    return FileResponse("./static/index.html", media_type="text/html")
-
-
-@app.get("/attraction/{id}", include_in_schema=False)
-async def attraction(request: Request, id: int):
-    return FileResponse("./static/attraction.html", media_type="text/html")
-
-
-@app.get("/booking", include_in_schema=False)
-async def booking(request: Request):
-    return FileResponse("./static/booking.html", media_type="text/html")
-
-
-@app.get("/thankyou", include_in_schema=False)
-async def thankyou(request: Request):
-    return FileResponse("./static/thankyou.html", media_type="text/html")
+app.include_router(staticPage.router)
