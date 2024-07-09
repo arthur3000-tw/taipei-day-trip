@@ -27,10 +27,10 @@ app.mount('/static', StaticFiles(directory='static', html=True))
 
 
 # DB 實體化
-MyDB = DB.DB("localhost","taipei_day_trip")
-MyDB.initialize()
+myDB = DB.DB("localhost","taipei_day_trip")
+myDB.initialize()
 # db instance 存放於 app.state 中
-app.state.DB = MyDB
+app.state.db = myDB
 
 
 
