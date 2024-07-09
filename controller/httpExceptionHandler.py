@@ -1,8 +1,7 @@
-from fastapi import APIRouter, Request, HTTPException, status
+from fastapi import Request, HTTPException, status
 from fastapi.responses import JSONResponse
 from model import responseModel
 
-router = APIRouter()
 
 class CustomHttpException(HTTPException):
     pass
