@@ -2,6 +2,7 @@ from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
 from model.AttractionModel import AttractionID
 from model.responseModel import Error
+from model.getAttractionById import get_attraction_id
 
 router = APIRouter()
 
