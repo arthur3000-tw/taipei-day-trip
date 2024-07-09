@@ -245,13 +245,11 @@ def validateUser(userAuth: UserAuth):
         raise ValueError()
 
 
-# jwt 加密參數
-JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
-EXPIRED_DAYS = 7
-JWT_ALGORITHM = "HS256"
 
-my_jwt = MyJWT.MyJWT()
-
+# 實體化 MyJWT
+my_jwt = MyJWT.MyJWT(jwt_secret_key = os.environ.get("JWT_SECRET_KEY"), expired_days = 7, jwt_algorithm = "HS256")
+# MyJWT instance 存放於 app.state 中
+app.state.jwt = my_jwt
 
 
 
