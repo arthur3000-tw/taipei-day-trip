@@ -25,8 +25,10 @@ app.mount('/static', StaticFiles(directory='static', html=True))
 
 security = HTTPBearer()
 
+# DB 實體化
 myDB = db.db("localhost","taipei_day_trip")
 myDB.initialize()
+# db instance 儲存於 app.state
 app.state.db = myDB
 
 
