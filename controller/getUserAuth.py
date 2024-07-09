@@ -12,8 +12,9 @@ security = HTTPBearer()
 # 取得當前登入的會員資訊
 @router.get(path="/api/user/auth")
 async def get_api_user_auth(request: Request, credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)]) -> UserInfo:
+    my_jwt = request.app.state.jwt
     try:
-        userInfo = validateJWT(credentials.credentials)
+        userInfo = my_jwt.validate(credentials.credentials)
         if isLogin(userInfo):
             return userInfo
         else:
