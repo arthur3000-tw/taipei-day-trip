@@ -1,5 +1,6 @@
 from fastapi import APIRouter,Request
 from model.DataListModel import DataList
+from model.getMrts import get_mrts
 
 router = APIRouter()
 
