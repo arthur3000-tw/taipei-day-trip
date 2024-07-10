@@ -1,5 +1,6 @@
 from model.UserModel import UserAuth
 from model.MyJWT import JWT
+from model.validatePassword import validatePassword
 
 # 驗證使用者
 # 輸入
