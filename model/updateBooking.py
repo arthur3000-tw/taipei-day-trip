@@ -1,6 +1,7 @@
 import datetime
 from model.BookingModel import BookingInput
 from model.UserModel import UserInfo
+from model.StatusModel import Status
 
 # 更新 booking 資料
 # 輸入
