@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 import datetime
+from model.EnumModel import TimeEnum, PriceEnum
 
 
 # 建立 attraction info for booking 資料 model
