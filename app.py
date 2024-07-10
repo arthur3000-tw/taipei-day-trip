@@ -33,61 +33,12 @@ app.state.db = myDB
 
 
 
-
-class Trip(BaseModel):
-    attraction: BookingAttraction
-    date: datetime.date
-    time: TimeEnum
-
-
-class Contact(BaseModel):
-    name: str
-    email: EmailStr
-    phone: str
-
-
-class Order(BaseModel):
-    price: PriceEnum
-    trip: Trip
-    contact: Contact
-
-
-class OrderInput(BaseModel):
-    prime: str
-    order: Order
-
-
 class PrimeOutput(BaseModel):
     status: int
     message: str
     rec_trade_id: str | None = None
     transaction_time: datetime.datetime | None = None
 
-
-class Payment(BaseModel):
-    status: int
-    message: str
-
-
-class OrderInfo(BaseModel):
-    number: str
-    payment: Payment
-
-
-class OrderOutput(BaseModel):
-    data: OrderInfo
-
-
-class GetOrder(BaseModel):
-    number: str
-    price: PriceEnum
-    trip: Trip
-    contact: Contact
-    status: int
-
-
-class GetOrderOutput(BaseModel):
-    data: GetOrder
 
 
 # 實體化 MyJWT
