@@ -1,7 +1,7 @@
 from controller import getAttractions, getAttractionById, getMrts, getUserAuth, putUserAuth, postUser, postBooking, getBooking, deleteBooking, postOrders, getOrder
 from controller import staticPage, httpExceptionHandler, validationExceptionHandler
 from model import DB, MyJWT
-from fastapi import *
+from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 import os
 
