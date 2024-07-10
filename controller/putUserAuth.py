@@ -10,8 +10,8 @@ router = APIRouter()
 # 登入會員帳戶
 @router.put(path="/api/user/auth", responses={400: {"model": Error}})
 async def put_api_user_auth(request: Request, userAuth: UserAuth) -> JWT:
-    my_jwt = router.app.state.jwt
-    myDB = router.app.state.db
+    my_jwt = request.app.state.jwt
+    myDB = request.app.state.db
     try:
         result = validateUser(myDB, my_jwt, userAuth)
         return result

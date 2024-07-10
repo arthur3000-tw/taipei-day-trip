@@ -14,8 +14,8 @@ security = HTTPBearer()
 # 建立新的預定行程
 @router.post(path="/api/booking")
 async def post_api_booking(request: Request, credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)], bookingInput: BookingInput) -> OK:
-    my_jwt = router.app.state.jwt
-    myDB = router.app.state.db
+    my_jwt = request.app.state.jwt
+    myDB = request.app.state.db
     try:
         userInfo = my_jwt.validate(credentials.credentials)
         if isLogin(userInfo):

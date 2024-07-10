@@ -8,7 +8,7 @@ router = APIRouter()
 # 註冊會員帳戶
 @router.post(path="/api/user", responses={400: {"model": Error}})
 async def post_api_user(request: Request, signUpInfo: SignUpInfo) -> OK:
-    myDB = router.app.state.db
+    myDB = request.app.state.db
     try:
         return signUp(myDB, signUpInfo)
     except ValueError:
