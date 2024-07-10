@@ -1,4 +1,4 @@
-from controller import getAttractions, getAttractionById, getMrts, getUserAuth, putUserAuth, postUser, postBooking, getBooking
+from controller import getAttractions, getAttractionById, getMrts, getUserAuth, putUserAuth, postUser, postBooking, getBooking, deleteBooking
 from controller import staticPage, httpExceptionHandler, validationExceptionHandler
 from model import DB, MyJWT
 import urllib.request
@@ -95,19 +95,6 @@ my_jwt = MyJWT.MyJWT(jwt_secret_key = os.environ.get("JWT_SECRET_KEY"), expired_
 # MyJWT instance 存放於 app.state 中
 app.state.jwt = my_jwt
 
-
-# 刪除 booking 資料
-def deleteBooking(userInfo: UserInfo):
-    # 取出資料
-    userId = userInfo.data.id
-    # 資料庫指令
-    sql = "DELETE FROM booking WHERE user_id = %s and ordered = %s"
-    val = (userId,False)
-    result = insertDB(sql, val)
-    if result != 0:
-        return OK(ok=True)
-    else:
-        return JSONResponse(status_code=400, content=Error(error=True, message="沒有可以刪除的資料").model_dump())
 
 
 def generateOrderNumber(primeOutput:PrimeOutput):
@@ -270,17 +257,7 @@ app.include_router(getBooking.router)
 
 
 # 刪除目前的預定行程
-@app.delete(path="/api/booking")
-async def delete_api_booking(request: Request, credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)]):
-    try:
-        userInfo = validateJWT(credentials.credentials)
-        if isLogin(userInfo):
-            result = deleteBooking(userInfo)
-            return result
-        else:
-            return JSONResponse(status_code=403, content=Error(error=True, message="尚未登入").model_dump())
-    except:
-        return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤").model_dump())
+app.include_router(deleteBooking.router)
 
 
 @app.post(path="/api/orders")
