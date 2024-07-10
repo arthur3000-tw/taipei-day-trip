@@ -3,6 +3,7 @@ import json
 import urllib.request
 import datetime
 from model.OrderModel import OrderInput
+from model.TapPayPrimeModel import PrimeOutput
 
 
 def payByPrime(orderInput: OrderInput):

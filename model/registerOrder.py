@@ -1,4 +1,5 @@
 from fastapi.responses import JSONResponse
+from model.payByPrime import payByPrime
 from model.OrderModel import OrderInput, OrderOutput, OrderInfo, Payment
 from model.UserModel import UserInfo
 from model.ResponseModel import Error
