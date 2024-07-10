@@ -31,26 +31,6 @@ myDB.initialize()
 app.state.db = myDB
 
 
-# 建立 attraction info for booking 資料 model
-class BookingAttraction(BaseModel):
-    id: int
-    name: str
-    address: str
-    image: str
-
-
-# 建立 booking 資料 model
-class Booking(BaseModel):
-    attraction: BookingAttraction
-    date: datetime.date
-    time: str
-    price: int
-
-
-class BookingOutput(BaseModel):
-    data: Booking | None = None
-
-
 class TimeEnum(str, Enum):
     morning = "morning"
     afternoon = "afternoon"
@@ -59,13 +39,6 @@ class TimeEnum(str, Enum):
 class PriceEnum(IntEnum):
     morning = 2000
     afternoon = 2500
-
-
-class BookingInput(BaseModel):
-    attractionId: int
-    date: datetime.date
-    time: TimeEnum
-    price: PriceEnum
 
 
 class Trip(BaseModel):
