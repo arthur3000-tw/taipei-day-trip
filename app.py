@@ -1,4 +1,4 @@
-from controller import getAttractions, getAttractionById, getMrts, getUserAuth, putUserAuth, postUser, staticPage,httpExceptionHandler,validationExceptionHandler
+from controller import getAttractions, getAttractionById, getMrts, getUserAuth, putUserAuth, postUser, postBooking, staticPage, httpExceptionHandler, validationExceptionHandler
 from model import DB, MyJWT
 import urllib.request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -291,18 +291,9 @@ app.include_router(putUserAuth.router)
 # 註冊會員帳戶
 app.include_router(postUser.router)
 
+
 # 建立新的預定行程
-@app.post(path="/api/booking")
-async def post_api_booking(request: Request, credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)], bookingInput: BookingInput) -> OK:
-    try:
-        userInfo = validateJWT(credentials.credentials)
-        if isLogin(userInfo):
-            result = registerBooking(bookingInput, userInfo)
-            return result
-        else:
-            return JSONResponse(status_code=403, content=Error(error=True, message="尚未登入").model_dump())
-    except:
-        return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤").model_dump())
+app.include_router(postBooking.router)
 
 
 # 取得尚未確認下單的預訂行程
