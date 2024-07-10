@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
-from model.responseModel import Error
+from model.ResponseModel import Error, OK
 from model.signUp import SignUpInfo, signUp
 
 router = APIRouter()

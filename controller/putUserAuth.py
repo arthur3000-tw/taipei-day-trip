@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
-from model.responseModel import Error
+from model.ResponseModel import Error
 from model.UserModel import UserAuth
 from model.MyJWT import JWT
 
