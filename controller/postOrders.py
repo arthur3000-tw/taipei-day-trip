@@ -3,6 +3,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi.responses import JSONResponse
 from typing import Annotated
 from model.isLogin import isLogin
+from model.registerOrder import registerOrder
 from model.ResponseModel import Error
 from model.OrderModel import OrderInput
 
@@ -14,10 +15,11 @@ security = HTTPBearer()
 @router.post(path="/api/orders")
 async def post_api_orders(request: Request, credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)], orderInput: OrderInput):
     my_jwt = request.app.state.jwt
+    myDB = request.app.state.db
     try:
         userInfo = my_jwt.validate(credentials.credentials)
         if isLogin(userInfo):
-            result = registerOrder(orderInput,userInfo)
+            result = registerOrder(myDB, orderInput, userInfo)
             return result
         else:
             return JSONResponse(status_code=403, content=Error(error=True, message="尚未登入").model_dump())
