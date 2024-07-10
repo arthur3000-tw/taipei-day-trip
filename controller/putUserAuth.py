@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from model.ResponseModel import Error
 from model.UserModel import UserAuth
 from model.MyJWT import JWT
+from model.validateUser import validateUser
 
 router = APIRouter()
 
