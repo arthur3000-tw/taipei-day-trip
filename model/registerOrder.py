@@ -1,6 +1,7 @@
 from fastapi.responses import JSONResponse
 from model.payByPrime import payByPrime
 from model.generateOrderNumber import generateOrderNumber
+from model.orderBooking import orderBooking
 from model.OrderModel import OrderInput, OrderOutput, OrderInfo, Payment
 from model.UserModel import UserInfo
 from model.ResponseModel import Error
@@ -13,7 +14,7 @@ def registerOrder(myDB, orderInput: OrderInput, userInfo: UserInfo):
     # Generate order number
     orderNumber = generateOrderNumber(primeOutput)
     # Get booking id and change status
-    status = orderBooking(userInfo,orderInput)
+    status = orderBooking(myDB,userInfo,orderInput)
     if status.status_code == 1:
         return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤，未找到此訂單(1)").model_dump())
     elif status.status_code == 2:

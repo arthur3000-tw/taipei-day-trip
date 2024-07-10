@@ -1,4 +1,4 @@
-from controller import getAttractions, getAttractionById, getMrts, getUserAuth, putUserAuth, postUser, postBooking, getBooking, deleteBooking
+from controller import getAttractions, getAttractionById, getMrts, getUserAuth, putUserAuth, postUser, postBooking, getBooking, deleteBooking, postOrders
 from controller import staticPage, httpExceptionHandler, validationExceptionHandler
 from model import DB, MyJWT
 import urllib.request
@@ -36,40 +36,6 @@ app.state.db = myDB
 my_jwt = MyJWT.MyJWT(jwt_secret_key = os.environ.get("JWT_SECRET_KEY"), expired_days = 7, jwt_algorithm = "HS256")
 # MyJWT instance 存放於 app.state 中
 app.state.jwt = my_jwt
-
-
-
-def orderBooking(userInfo: UserInfo,orderInput:OrderInput):
-    # 取出資料
-    userId = userInfo.data.id
-    attractionId = orderInput.order.trip.attraction.id
-    date = orderInput.order.trip.date
-    time = orderInput.order.trip.time
-    # 取得 bookingId
-    sql = "SELECT * FROM booking WHERE user_id = %s AND attraction_id = %s AND date = %s AND time = %s AND ordered = %s"
-    val = (userId,attractionId,date,time,False)
-    result = queryDB(sql, val)
-    if len(result) == 1:
-        bookingId = result[0]["id"]
-    else:
-        return Status(status_code=1)
-    # 更新 bookingId status
-    log_time = datetime.datetime.now()
-    sql = "UPDATE booking SET log_time = %s, ordered = %s \
-         WHERE user_id = %s AND attraction_id = %s AND date = %s AND time = %s AND ordered = %s"
-    val = (log_time,True,userId,attractionId,date,time,False)
-    result = insertDB(sql, val)
-    if result == 1:
-        # 刪除其餘 booking
-        delete_result = deleteBooking(userInfo)
-        try:
-            if delete_result.ok == True:
-                return Status(status_code=0,data=bookingId)
-        # 若無其他 booking 也是可以繼續
-        except:
-            return Status(status_code=3,data=bookingId)
-    else:
-        return Status(status_code=2)
 
 
 
@@ -134,17 +100,7 @@ app.include_router(deleteBooking.router)
 
 
 # 建立新的訂單，並完成付款程序
-@app.post(path="/api/orders")
-async def post_api_orders(request: Request, credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)], orderInput: OrderInput):
-    try:
-        userInfo = validateJWT(credentials.credentials)
-        if isLogin(userInfo):
-            result = registerOrder(orderInput,userInfo)
-            return result
-        else:
-            return JSONResponse(status_code=403, content=Error(error=True, message="尚未登入").model_dump())
-    except:
-        return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤").model_dump())
+app.include_router(postOrders.router)
 
 
 # 根據訂單編號取得訂單資訊
