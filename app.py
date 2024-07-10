@@ -49,10 +49,7 @@ class SignUpInfo(BaseModel):
     password: str
 
 
-# 建立 userAuth 資料 model
-class UserAuth(BaseModel):
-    email: EmailStr
-    password: str
+
 
 
 # 建立 jwt 資料 model

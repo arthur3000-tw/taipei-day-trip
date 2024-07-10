@@ -9,3 +9,8 @@ class User(BaseModel):
 # 建立 userInfo 資料 model
 class UserInfo(BaseModel):
     data: User | None = None
+
+# 建立 userAuth 資料 model
+class UserAuth(BaseModel):
+    email: EmailStr
+    password: str
