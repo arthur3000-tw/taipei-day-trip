@@ -260,6 +260,7 @@ app.include_router(getBooking.router)
 app.include_router(deleteBooking.router)
 
 
+# 建立新的訂單，並完成付款程序
 @app.post(path="/api/orders")
 async def post_api_orders(request: Request, credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)], orderInput: OrderInput):
     try:
@@ -273,6 +274,7 @@ async def post_api_orders(request: Request, credentials: Annotated[HTTPAuthoriza
         return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤").model_dump())
 
 
+# 根據訂單編號取得訂單資訊
 @app.get(path="/api/order/{orderNumber}")
 async def get_api_order(request: Request, credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)], orderNumber: str):
     try:
