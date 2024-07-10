@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
+from model.responseModel import Error
 
 router = APIRouter()
 
