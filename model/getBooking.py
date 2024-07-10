@@ -25,7 +25,7 @@ def getBooking(myDB, userInfo: UserInfo):
         time = result[0]["time"]
         price = result[0]["price"]
         # 取得 attraction 資料
-        attractionInfo = get_attraction_id(attractionId)
+        attractionInfo = get_attraction_id(myDB,attractionId)
         # 取出 bookingAttraction 資料
         attractionName = attractionInfo.data.name
         attractionAddress = attractionInfo.data.address

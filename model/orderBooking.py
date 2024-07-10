@@ -26,7 +26,7 @@ def orderBooking(myDB, userInfo: UserInfo,orderInput:OrderInput):
     result = myDB.insert(sql, val)
     if result == 1:
         # 刪除其餘 booking
-        delete_result = deleteBooking(userInfo)
+        delete_result = deleteBooking(myDB, userInfo)
         try:
             if delete_result.ok == True:
                 return Status(status_code=0,data=bookingId)
