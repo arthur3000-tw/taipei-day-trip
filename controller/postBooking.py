@@ -4,6 +4,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from typing import Annotated
 from model.isLogin import isLogin
 from model.ResponseModel import OK, Error
+from model.BookingModel import BookingInput
 
 router = APIRouter()
 
