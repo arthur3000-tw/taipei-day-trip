@@ -1,4 +1,6 @@
 from pydantic import BaseModel, EmailStr
+from model.encodePassword import encodePassword
+from model.ResponseModel import OK
 
 # 建立 signUpInfo 資料 model
 class SignUpInfo(BaseModel):
