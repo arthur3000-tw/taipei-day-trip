@@ -154,20 +154,6 @@ class Status(BaseModel):
 
 
 
-# 向資料庫輸入資料
-def insertDB(sql, val):
-    # 從連接池取得連線
-    cnx = cnxPool.get_connection()
-    # 進行操作
-    myCursor = cnx.cursor(dictionary=True)
-    myCursor.execute(sql, val)
-    cnx.commit()
-    myResult = myCursor.rowcount
-    # 關閉游標與連接
-    myCursor.close()
-    cnx.close()
-    # 回傳結果
-    return myResult
 
 
 

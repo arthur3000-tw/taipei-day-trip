@@ -23,7 +23,7 @@ class DB:
     # val: str      查詢內容
     # 輸出
     # myResult      查詢結果
-    def query(self,sql, val=None):
+    def query(self, sql, val=None):
         # 從連接池取得連線
         cnx = self.cnxPool.get_connection()
         # 進行操作
@@ -35,3 +35,23 @@ class DB:
         cnx.close()
         # 回傳結果
         return myResult
+    # 向資料庫輸入資料
+    # 輸入
+    # sql: str      資料庫指令
+    # val: str      查詢內容
+    # 輸出
+    # myResult      輸出結果
+    def insert(self, sql, val):
+        # 從連接池取得連線
+        cnx = self.cnxPool.get_connection()
+        # 進行操作
+        myCursor = cnx.cursor(dictionary=True)
+        myCursor.execute(sql, val)
+        cnx.commit()
+        myResult = myCursor.rowcount
+        # 關閉游標與連接
+        myCursor.close()
+        cnx.close()
+        # 回傳結果
+        return myResult
+
