@@ -1,4 +1,4 @@
-from controller import getAttractions, getAttractionById, getMrts, getUserAuth, putUserAuth, postUser, postBooking, getBooking, deleteBooking, postOrders
+from controller import getAttractions, getAttractionById, getMrts, getUserAuth, putUserAuth, postUser, postBooking, getBooking, deleteBooking, postOrders, getOrder
 from controller import staticPage, httpExceptionHandler, validationExceptionHandler
 from model import DB, MyJWT
 import urllib.request
@@ -37,28 +37,6 @@ my_jwt = MyJWT.MyJWT(jwt_secret_key = os.environ.get("JWT_SECRET_KEY"), expired_
 # MyJWT instance 存放於 app.state 中
 app.state.jwt = my_jwt
 
-
-
-def getOrder(userInfo:UserInfo, orderNumber:str):
-    sql = "SELECT booking.*, orders.*, \
-         attraction.id as a_id, attraction.name as a_name, attraction.address as a_address, attraction.images as a_images \
-         FROM orders \
-         INNER JOIN booking ON booking.id = orders.booking_id \
-         INNER JOIN attraction ON booking.attraction_id = attraction.id \
-         WHERE orders.order_number = %s AND booking.user_id = %s"
-    val = (orderNumber,userInfo.data.id)
-    result = queryDB(sql,val)
-    if len(result) == 1:
-        result = result[0]
-        image = json.loads(result["a_images"])
-        image = image["images"][0]
-        return GetOrderOutput(data=GetOrder(number=orderNumber,price=result["price"],
-                                            trip=Trip(attraction=BookingAttraction(id=result["a_id"],name=result["a_name"],address=result["a_address"],image=image),
-                                                    date=result["date"],time=result["time"]),
-                                            contact=Contact(name=result["contact_name"],email=result["contact_email"],phone=result["contact_phone"]),
-                                            status=result["status"]))
-    else:
-        return JSONResponse(status_code=400, content=Error(error=True, message="輸入資料錯誤，未查詢到此訂單").model_dump())
 
 
 ######################################################################################
@@ -104,17 +82,7 @@ app.include_router(postOrders.router)
 
 
 # 根據訂單編號取得訂單資訊
-@app.get(path="/api/order/{orderNumber}")
-async def get_api_order(request: Request, credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)], orderNumber: str):
-    try:
-        userInfo = validateJWT(credentials.credentials)
-        if isLogin(userInfo):
-            result = getOrder(userInfo,orderNumber)
-            return result
-        else:
-            return JSONResponse(status_code=403, content=Error(error=True, message="尚未登入").model_dump())
-    except:
-        return JSONResponse(status_code=500, content=Error(error=True, message="伺服器內部錯誤").model_dump())
+app.include_router(getOrder.router)
 
 
 # Validation Exception Handling
