@@ -13,7 +13,7 @@ def registerBooking(myDB, bookingInput: BookingInput, userInfo: UserInfo):
     # 確認 booking 狀況
     # 若已經有重複 booking 狀況
     if isBookingRegistered(myDB, bookingInput, userInfo):
-        result = updateBooking(bookingInput, userInfo)
+        result = updateBooking(myDB, bookingInput, userInfo)
         if result.status_code == 0:
             return JSONResponse(status_code=400, content=Error(error=True, message="重複預訂行程").model_dump())
         else:
