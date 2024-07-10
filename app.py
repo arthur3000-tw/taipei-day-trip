@@ -1,4 +1,4 @@
-from controller import getAttractions, getAttractionById, getMrts, getUserAuth, putUserAuth, staticPage,httpExceptionHandler,validationExceptionHandler
+from controller import getAttractions, getAttractionById, getMrts, getUserAuth, putUserAuth, postUser, staticPage,httpExceptionHandler,validationExceptionHandler
 from model import DB, MyJWT
 import urllib.request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -24,29 +24,11 @@ app = FastAPI()
 app.mount('/static', StaticFiles(directory='static', html=True))
 
 
-
-
 # DB 實體化
 myDB = DB.DB(host="localhost",database="taipei_day_trip")
 myDB.initialize()
 # db instance 存放於 app.state 中
 app.state.db = myDB
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # 建立 attraction info for booking 資料 model
@@ -148,26 +130,6 @@ class Status(BaseModel):
     data: int | None = None
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # 驗證使用者
 # 輸入
 # userAuth 格式資料
@@ -190,14 +152,10 @@ def validateUser(userAuth: UserAuth):
         raise ValueError()
 
 
-
 # 實體化 MyJWT
 my_jwt = MyJWT.MyJWT(jwt_secret_key = os.environ.get("JWT_SECRET_KEY"), expired_days = 7, jwt_algorithm = "HS256")
 # MyJWT instance 存放於 app.state 中
 app.state.jwt = my_jwt
-
-
-
 
 
 # 驗證密碼
@@ -210,12 +168,6 @@ def validatePassword(userPassword, dbPassword):
     userPassword = userPassword.encode("utf-8")
     dbPassword = dbPassword.encode("utf-8")
     return bcrypt.checkpw(userPassword, dbPassword)
-
-
-
-
-
-
 
 
 # 確認 booking 資料
@@ -491,13 +443,7 @@ app.include_router(putUserAuth.router)
 
 
 # 註冊會員帳戶
-@app.post(path="/api/user", responses={400: {"model": Error}})
-async def post_api_user(request: Request, signUpInfo: SignUpInfo) -> OK:
-    try:
-        return signUp(signUpInfo)
-    except ValueError:
-        return JSONResponse(status_code=400, content=Error(error=True, message="重複的 email").model_dump())
-
+app.include_router(postUser.router)
 
 # 建立新的預定行程
 @app.post(path="/api/booking")
