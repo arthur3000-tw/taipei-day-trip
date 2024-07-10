@@ -31,14 +31,6 @@ myDB.initialize()
 app.state.db = myDB
 
 
-class TimeEnum(str, Enum):
-    morning = "morning"
-    afternoon = "afternoon"
-
-
-class PriceEnum(IntEnum):
-    morning = 2000
-    afternoon = 2500
 
 
 class Trip(BaseModel):
