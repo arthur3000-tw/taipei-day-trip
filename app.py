@@ -92,39 +92,6 @@ def orderBooking(userInfo: UserInfo,orderInput:OrderInput):
 
 
 
-def payByPrime(orderInput: OrderInput):
-    #
-    url = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
-    headers = {
-        "Content-Type": "application/json",
-        "x-api-key": os.environ.get("PARTNER_KEY"),
-    }
-    data = json.dumps({
-        "prime": orderInput.prime,
-        "partner_key": os.environ.get("PARTNER_KEY"),
-        "merchant_id": "arthur3000_ESUN",
-        "details": "TapPay Test",
-        "amount": orderInput.order.price,
-        "cardholder": {
-            "phone_number": orderInput.order.contact.phone,
-            "name": orderInput.order.contact.name,
-            "email": orderInput.order.contact.email,
-        },
-    }).encode()
-    #
-    request = urllib.request.Request(url=url, headers=headers, data=data)
-    #
-    with urllib.request.urlopen(request) as response:
-        response_body = json.loads(response.read().decode("utf-8"))
-    #
-    status = response_body["status"]
-    message = response_body["msg"]
-    rec_trade_id = response_body["rec_trade_id"]
-    transaction_time = datetime.datetime.fromtimestamp(response_body["transaction_time_millis"]/1000)
-    #
-    return PrimeOutput(status=status,message=message,rec_trade_id=rec_trade_id,transaction_time=transaction_time)
-
-
 def getOrder(userInfo:UserInfo, orderNumber:str):
     sql = "SELECT booking.*, orders.*, \
          attraction.id as a_id, attraction.name as a_name, attraction.address as a_address, attraction.images as a_images \
