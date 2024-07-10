@@ -1,4 +1,4 @@
-from controller import getAttractions, getAttractionById, getMrts, getUserAuth, staticPage,httpExceptionHandler,validationExceptionHandler
+from controller import getAttractions, getAttractionById, getMrts, getUserAuth, putUserAuth, staticPage,httpExceptionHandler,validationExceptionHandler
 from model import DB, MyJWT
 import urllib.request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -545,13 +545,7 @@ app.include_router(getUserAuth.router)
 
 
 # 登入會員帳戶
-@app.put(path="/api/user/auth", responses={400: {"model": Error}})
-async def put_api_user_auth(request: Request, userAuth: UserAuth) -> JWT:
-    try:
-        result = validateUser(userAuth)
-        return result
-    except ValueError:
-        return JSONResponse(status_code=400, content=Error(error=True, message="未找到此 email 或密碼錯誤").model_dump())
+app.include_router(putUserAuth.router)
 
 
 # 註冊會員帳戶
