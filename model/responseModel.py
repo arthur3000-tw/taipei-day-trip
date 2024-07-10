@@ -7,4 +7,4 @@ class Error(BaseModel):
 
 # 建立 ok 資料 model
 class OK(BaseModel):
-    ok: bool
+    ok: bool 
