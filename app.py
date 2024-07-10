@@ -1,9 +1,16 @@
-from controller import getAttractions, getAttractionById, getMrts, getUserAuth, putUserAuth, postUser, postBooking, getBooking, deleteBooking, postOrders, getOrder
-from controller import staticPage, httpExceptionHandler, validationExceptionHandler
-from model import DB, MyJWT
+from controller.mrt import getMrts
+from controller import staticPage
+from controller.attraction import getAttractionById, getAttractions
+from controller.booking import deleteBooking, getBooking, postBooking
+from controller.exception_handler import httpExceptionHandler, validationExceptionHandler
+from controller.order import getOrder, postOrders
+from controller.user import getUserAuth, postUser, putUserAuth
+from model.jwt import MyJWT
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 import os
+
+from model.db import DB
 
 # app 加入 dependencies
 app = FastAPI()
