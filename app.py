@@ -52,9 +52,6 @@ class SignUpInfo(BaseModel):
 
 
 
-# 建立 jwt 資料 model
-class JWT(BaseModel):
-    token: str
 
 
 # 建立 attraction info for booking 資料 model

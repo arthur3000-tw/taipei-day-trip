@@ -1,3 +1,4 @@
+from pydantic import BaseModel
 import jwt
 import datetime
 from model.UserModel import UserInfo, User
@@ -31,3 +32,7 @@ class MyJWT:
         payload["exp"] = exp
         encoded_jwt = jwt.encode(payload, self.jwt_secret_key, algorithm=self.jwt_algorithm)
         return encoded_jwt
+
+# 建立 jwt 資料 model
+class JWT(BaseModel):
+    token: str
