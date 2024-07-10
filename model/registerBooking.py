@@ -1,5 +1,6 @@
 from fastapi.responses import JSONResponse
 from model.isBookingRegistered import isBookingRegistered
+from model.updateBooking import updateBooking
 from model.ResponseModel import Error, OK
 from model.BookingModel import BookingInput
 from model.UserModel import UserInfo
