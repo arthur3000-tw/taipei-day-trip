@@ -26,9 +26,9 @@ class MyJWT:
     # days: 有效期限天數
     # 輸出
     # encoded_jwt: JWT
-    def generate(self, payload, days):
+    def generate(self, payload):
         exp = datetime.datetime.now(
-            tz=datetime.timezone.utc) + datetime.timedelta(days=days)
+            tz=datetime.timezone.utc) + datetime.timedelta(days=self.expired_days)
         payload["exp"] = exp
         encoded_jwt = jwt.encode(payload, self.jwt_secret_key, algorithm=self.jwt_algorithm)
         return encoded_jwt
