@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from typing import Annotated
 from model.isLogin import isLogin
+from model.registerBooking import registerBooking
 from model.ResponseModel import OK, Error
 from model.BookingModel import BookingInput
 
@@ -14,10 +15,11 @@ security = HTTPBearer()
 @router.post(path="/api/booking")
 async def post_api_booking(request: Request, credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)], bookingInput: BookingInput) -> OK:
     my_jwt = router.app.state.jwt
+    myDB = router.app.state.db
     try:
         userInfo = my_jwt.validate(credentials.credentials)
         if isLogin(userInfo):
-            result = registerBooking(bookingInput, userInfo)
+            result = registerBooking(myDB, bookingInput, userInfo)
             return result
         else:
             return JSONResponse(status_code=403, content=Error(error=True, message="尚未登入").model_dump())
