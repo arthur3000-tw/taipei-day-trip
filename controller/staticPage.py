@@ -3,6 +3,10 @@ from fastapi.responses import FileResponse
 
 router = APIRouter()
 
+@router.get("/board")
+async def board(request:Request):
+    return FileResponse("./static/board.html", media_type="text/html")
+
 # Static Pages (Never Modify Code in this Block)
 @router.get("/", include_in_schema=False)
 async def index(request: Request):
