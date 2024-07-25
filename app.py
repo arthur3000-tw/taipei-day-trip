@@ -5,6 +5,7 @@ from controller.booking import deleteBooking, getBooking, postBooking
 from controller.exception_handler import httpExceptionHandler, validationExceptionHandler
 from controller.order import getOrder, postOrders
 from controller.user import getUserAuth, postUser, putUserAuth
+from controller.board import postBoard
 from model.jwt import MyJWT
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
@@ -71,3 +72,6 @@ app.add_exception_handler(httpExceptionHandler.CustomHttpException,httpException
 
 # Static Pages (Never Modify Code in this Block)
 app.include_router(staticPage.router)
+
+# 新增圖文留言板
+app.include_router(postBoard.router)

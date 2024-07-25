@@ -14,11 +14,12 @@ function upload() {
 
   const url = "/api/board";
   const method = "POST";
-  const body = form_data;
+//   const headers = { "Content-Type": "multipart/form-data" };
 
   fetch(url, {
     method: method,
-    body: JSON.stringify(body),
+    // headers: headers,
+    body: form_data,
   })
     .then((response) => {
       return response.json();
