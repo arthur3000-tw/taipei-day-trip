@@ -2,6 +2,7 @@ let upload_button = document.querySelector("#upload-button");
 
 upload_button.addEventListener("click", upload);
 
+
 function upload() {
   const board_content = document.querySelector("#board-content");
   const board_file = document.querySelector("#board-file");
@@ -31,4 +32,10 @@ function upload() {
         console.log("上傳成功")
       }
     });
+}
+
+async function renderBoard(){
+    const url = "/api/board";
+    let response = await fetch(url)
+    let data = await response.json()
 }
