@@ -12,10 +12,6 @@ def post_board(myDB,content,file):
     s3_client = boto3.client('s3')
     # 指定 s3 bucket
     bucket = "tdt-bucket"
-    # 取得副檔名
-    file_extension = file.filename.split(".")[1]
-    # 上傳檔案完整名稱（存入資料庫中）
-    object_name = uid + "." + file_extension
     # 上傳檔案
     try:
         response = s3_client.upload_fileobj(file.file, bucket, uid)
@@ -26,7 +22,7 @@ def post_board(myDB,content,file):
         return Status(status_code=1)
     # 更新資料庫
     sql="INSERT INTO board (message,image) VALUES (%s,%s)"
-    val=(content,object_name)
+    val=(content,uid)
     result = myDB.insert(sql,val)
     if result == 1:
         return Status(status_code=0)
