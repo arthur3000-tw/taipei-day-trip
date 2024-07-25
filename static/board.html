@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board</title>
+    <script src="../static/script/board.js" defer></script>
+</head>
+<body>
+    <h1>圖文留言板</h1>
+    <div>
+        <span>文字內容：</span>
+        <input type="text" name="content" id="board-content">
+    </div>
+    <div>
+        <span>選擇上傳的圖片(jpeg, png)：</span>
+        <input type="file" name="file" id="board-file" accept="image/png, image/jpeg">
+    </div>
+    <div>
+        <button id="upload-button">送出</button>
+        <span id="status"></span>
+    </div>
+    <hr>
+    <div id="board"></div>
+</body>
+</html>
