@@ -16,9 +16,7 @@ def post_board(myDB,content,file):
     # 上傳檔案
     try:
         response = s3_client.upload_fileobj(file.file, bucket, uid)
-        print(response)
     except ClientError as e:
-        print(e)
         logging.error(e)
         return Status(status_code=1)
     # 更新資料庫
