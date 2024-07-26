@@ -2,7 +2,7 @@ version: '3'
 
 services:
   web:
-    image: taipei-day-trip
+    image: arthur3000/taipei-day-trip
     platform: linux/amd64
     build: .
     command: sh -c "uvicorn app:app --port=8000 --host=0.0.0.0"
