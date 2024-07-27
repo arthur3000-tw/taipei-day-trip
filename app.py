@@ -10,15 +10,15 @@ from model.jwt import MyJWT
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 import os
-
 from model.db import DB
+
 
 # app 加入 dependencies
 app = FastAPI()
 app.mount('/static', StaticFiles(directory='static', html=True))
 
 # DB 實體化
-myDB = DB.DB(host="db-mysql-1.cvssiko2are2.ap-southeast-1.rds.amazonaws.com",database="taipei_day_trip")
+myDB = DB.DB(host=os.environ.get("DB_HOST"),database="taipei_day_trip")
 myDB.initialize()
 # db instance 存放於 app.state 中
 app.state.db = myDB

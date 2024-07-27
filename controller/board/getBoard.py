@@ -11,5 +11,6 @@ async def get_api_board(request:Request):
     try:
         result = get_board(myDB)
         return result
-    except:
+    except Exception as e:
+        print(e)
         return JSONResponse(status_code=400, content=Error(error=True, message="無法取得資料").model_dump())
