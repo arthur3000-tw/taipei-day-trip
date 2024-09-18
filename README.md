@@ -6,6 +6,8 @@
 
 - [Introduction](#introduction)
 - [Technology Stack](#technology-stack)
+- [Database Schema](#database-schema)
+- [System Architecture](#system-architechure)
 
 ## Introduction
 
