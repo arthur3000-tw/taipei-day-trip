@@ -37,13 +37,19 @@ This is a e-commerce of Taipei tourism website.
 | --------------- | --------------------------------- |
 | Python FastAPI  | Back-end framework                |
 | AWS RDS         | Use MySQL as database             |
-| RESTful APIs    |                                   |
+| RESTful APIs    | API architecture                  |
 | JavaScripts     | Front-end language                |
 | AWS EC2         | Running on cloud server           |
 | Docker          | Depolyment tool                   |
 | TapPay SDK      | Payment system                    |
 | RWD             | Adapt HD, tablet and phone screen |
+| JWT             | Apply JWT for log-in system       |
+| bcrypt          | Use bcrypt for password storage   |
 
 ## Database Schema
 
+![image](https://github.com/user-attachments/assets/d62238f2-0f72-4785-9784-4385986f328b)
+
 ## System Architecture
+
+<img width="1076" alt="image" src="https://github.com/user-attachments/assets/eaae1981-c4c6-44f0-997e-0ba9d88aaa32">
