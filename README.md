@@ -33,18 +33,18 @@ This is a e-commerce of Taipei tourism website.
 
 ## Technology Stack
 
-| Names           | Descriptions                      |
-| --------------- | --------------------------------- |
-| Python FastAPI  | Back-end framework                |
-| AWS RDS         | Use MySQL as database             |
-| RESTful APIs    | API architecture                  |
-| JavaScripts     | Front-end language                |
-| AWS EC2         | Running on cloud server           |
-| Docker          | Depolyment tool                   |
-| TapPay SDK      | Payment system                    |
-| RWD             | Adapt HD, tablet and phone screen |
-| JWT             | Apply JWT for log-in system       |
-| bcrypt          | Use bcrypt for password storage   |
+| Names           | Descriptions                         |
+| --------------- | ------------------------------------ |
+| Python FastAPI  | Back-end framework                   |
+| AWS RDS         | Use MySQL as database                |
+| RESTful APIs    | API architecture                     |
+| JavaScripts     | Front-end language                   |
+| AWS EC2         | Running on cloud server              |
+| Docker          | Depolyment tool                      |
+| TapPay SDK      | Payment system                       |
+| RWD             | Adapt HD, tablet and phone screen    |
+| JWT             | Apply JWT for log-in system          |
+| bcrypt          | Password encryption                  |
 
 ## Database Schema
 
