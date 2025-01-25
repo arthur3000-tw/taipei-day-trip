@@ -11,7 +11,6 @@ function upload() {
   const board_file = document.querySelector("#board-file");
   const form_data = new FormData();
   const file = board_file.files[0];
-  console.log(file);
 
   form_data.append("file", file);
   form_data.append("content", board_content.value);
@@ -44,7 +43,6 @@ async function renderBoard() {
   let posts = await response.json();
   let board = document.querySelector("#board");
   let image_CDN = "d2q4ypya0go8ne.cloudfront.net";
-  console.log(posts);
   for (i in posts) {
     const post_node = document.createElement("div");
 
